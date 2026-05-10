@@ -538,17 +538,21 @@
   .arch-card {
     border-radius: var(--radius);
     padding: 28px 24px 22px;
+    padding-left: 22px;
+    min-height: 320px;
     cursor: default;
     transition: transform 0.25s ease, box-shadow 0.3s ease, border-color 0.25s ease;
     position: relative;
     overflow: hidden;
     border: 1px solid rgba(255,255,255,0.07);
+    border-left: 4px solid var(--arch-color, rgba(255,255,255,0.2));
     display: flex;
     flex-direction: column;
   }
   .arch-card:hover {
     transform: translateY(-6px);
     border-color: var(--arch-color, rgba(255,255,255,0.2));
+    border-left-color: var(--arch-color, rgba(255,255,255,0.2));
     box-shadow: 0 12px 40px -12px var(--arch-color-shadow, rgba(255,255,255,0.15));
   }
   .arch-card.is-result {
@@ -564,7 +568,7 @@
     font-size: 2.5rem;
     font-weight: 900;
     line-height: 1;
-    opacity: 0.12;
+    opacity: 0.22;
     position: absolute;
     top: 16px; right: 20px;
     letter-spacing: -0.04em;
@@ -586,6 +590,7 @@
     line-height: 1.1;
     margin-bottom: 8px;
     letter-spacing: -0.01em;
+    color: var(--arch-color, var(--white));
   }
 
   .arch-card-tagline {
@@ -604,41 +609,48 @@
     text-transform: uppercase;
     opacity: 0.5;
     border-top: 1px solid rgba(255,255,255,0.1);
-    padding-top: 12px;
+    padding-top: 14px;
     margin-top: auto;
   }
 
   .arch-card-links {
     display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-top: 14px;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 18px;
+    flex-wrap: wrap;
   }
 
-  .arch-card-link {
+  .arch-btn {
     display: inline-block;
+    font-family: 'DM Sans', sans-serif;
     font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     text-decoration: none;
-    transition: opacity 0.2s, transform 0.2s;
+    padding: 8px 18px;
+    border-radius: 999px;
+    border: 1.5px solid var(--arch-color, var(--white));
+    transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease, filter 0.2s ease;
+    cursor: pointer;
+    white-space: nowrap;
   }
-  .arch-card-link:hover {
-    transform: translateX(3px);
+  .arch-btn.outline {
+    background: transparent;
+    color: var(--arch-color, var(--white));
   }
-  .arch-card-link.preview {
-    color: rgba(255,255,255,0.65);
+  .arch-btn.outline:hover {
+    background: var(--arch-color-tint, rgba(255,255,255,0.08));
+    transform: translateY(-1px);
   }
-  .arch-card-link.preview:hover {
-    color: var(--white);
+  .arch-btn.solid {
+    background: var(--arch-color, var(--white));
+    color: #0a0a12;
   }
-  .arch-card-link.order {
-    color: var(--arch-color, var(--text));
-    opacity: 0.85;
-  }
-  .arch-card-link.order:hover {
-    opacity: 1;
+  .arch-btn.solid:hover {
+    filter: brightness(1.12);
+    transform: translateY(-1px);
   }
 
   .arch-result-badge {
@@ -1100,18 +1112,21 @@ function renderBrowseGrid(resultId) {
   grid.innerHTML = ARCHETYPES.map((a, i) => {
     const isResult = a.id === resultId;
     const shadow = hexToRgba(a.color, 0.35);
+    const tintStrong = hexToRgba(a.color, 0.18);
+    const tintHover = hexToRgba(a.color, 0.14);
+    const cardBg = `linear-gradient(135deg, ${tintStrong} 0%, rgba(15,15,26,0) 70%), var(--panel)`;
     return `
     <div class="arch-card ${isResult ? 'is-result' : ''}"
-         style="background: ${a.cardBg}; --arch-color: ${a.color}; --arch-color-shadow: ${shadow};${isResult ? '' : ` border-color: rgba(255,255,255,0.07);`}">
+         style="background: ${cardBg}; --arch-color: ${a.color}; --arch-color-tint: ${tintHover}; --arch-color-shadow: ${shadow};">
       <div class="arch-result-badge">✦ Your Result</div>
       <div class="arch-card-number" style="color:${a.color}">${String(i + 1).padStart(2, '0')}</div>
       <div class="arch-card-label" style="color:${a.color}">Archetype</div>
-      <div class="arch-card-name" style="color:${isResult ? a.color : 'var(--white)'}">${a.name}</div>
+      <div class="arch-card-name">${a.name}</div>
       <div class="arch-card-tagline">${a.tagline}</div>
       <div class="arch-card-persona">Persona: ${a.persona}</div>
       <div class="arch-card-links">
-        <a href="${TEMPLATE_BASE}${a.template}" target="_blank" rel="noopener" class="arch-card-link preview">Preview template →</a>
-        <a href="${FIVERR_URL}" target="_blank" rel="noopener" class="arch-card-link order" style="color:${a.color}">Order this template →</a>
+        <a href="https://robertsdkyle.com/archetype_quiz/templates/${a.template}" target="_blank" rel="noopener" class="arch-btn outline">Preview template →</a>
+        <a href="${FIVERR_URL}" target="_blank" rel="noopener" class="arch-btn solid">Order this template →</a>
       </div>
     </div>
   `;
