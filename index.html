@@ -4,13 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Find Your Archetype</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;0,900;1,300;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;0,900;1,300;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
     --bg: #080810;
     --panel: #0f0f1a;
+    --panel-2: #14141f;
     --border: rgba(255,255,255,0.08);
     --text: #e8e4f0;
     --muted: rgba(232,228,240,0.45);
@@ -131,7 +132,7 @@
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 100;
-    padding: 20px 48px;
+    padding: 14px 32px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -149,16 +150,16 @@
   }
 
   .quiz-counter {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     font-weight: 600;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.16em;
     color: var(--muted);
     text-transform: uppercase;
   }
 
   .progress-wrap {
     position: fixed;
-    top: 64px; left: 0; right: 0;
+    top: 52px; left: 0; right: 0;
     height: 2px;
     background: var(--border);
     z-index: 100;
@@ -172,7 +173,7 @@
   .question-stage {
     max-width: 760px;
     margin: 0 auto;
-    padding: 140px 0 80px;
+    padding: 120px 0 120px;
   }
 
   .q-number {
@@ -198,82 +199,106 @@
   .answers-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 14px;
+    gap: 16px;
   }
 
   @media (max-width: 600px) {
-    .answers-grid { grid-template-columns: 1fr; }
+    .answers-grid { grid-template-columns: 1fr; gap: 12px; }
   }
 
   .answer-card {
     background: var(--panel);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 22px 24px;
+    padding: 28px 28px;
     cursor: pointer;
-    transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    transition: border-color 0.2s, background 0.2s, transform 0.15s, box-shadow 0.25s;
     text-align: left;
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
   }
   .answer-card::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(212,168,64,0.05), transparent);
+    background: linear-gradient(135deg, rgba(212,168,64,0.06), transparent 60%);
     opacity: 0;
     transition: opacity 0.2s;
+    pointer-events: none;
   }
   .answer-card:hover {
-    border-color: rgba(212,168,64,0.4);
+    border-color: rgba(212,168,64,0.45);
     transform: translateY(-2px);
   }
   .answer-card:hover::before { opacity: 1; }
 
   .answer-card.selected {
     border-color: var(--gold);
-    background: rgba(212,168,64,0.1);
+    background: rgba(212,168,64,0.12);
+    box-shadow: 0 0 0 1px var(--gold), 0 8px 32px rgba(212,168,64,0.25);
   }
   .answer-card.selected::before { opacity: 1; }
+  .answer-card.selected .answer-letter {
+    background: var(--gold);
+    color: #080810;
+    box-shadow: 0 0 16px rgba(212,168,64,0.5);
+  }
 
   .answer-letter {
-    font-size: 0.6rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
+    flex: 0 0 auto;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(212,168,64,0.15);
     color: var(--gold);
-    margin-bottom: 8px;
-    opacity: 0.7;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
   }
 
   .answer-text {
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     font-weight: 400;
-    line-height: 1.55;
+    line-height: 1.6;
     color: var(--text);
+    padding-top: 4px;
   }
 
-  .btn-next {
-    margin-top: 36px;
-    background: transparent;
-    border: 1px solid rgba(212,168,64,0.4);
-    color: var(--gold);
+  /* Back button (fixed bottom-left) */
+  .btn-back {
+    position: fixed;
+    bottom: 28px;
+    left: 28px;
+    z-index: 90;
+    background: rgba(15,15,26,0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    color: var(--muted);
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.8rem;
+    font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    padding: 13px 36px;
+    padding: 10px 18px;
     border-radius: 999px;
     cursor: pointer;
-    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    transition: opacity 0.25s, color 0.2s, border-color 0.2s, transform 0.15s;
     display: none;
   }
-  .btn-next.visible { display: inline-block; }
-  .btn-next:hover {
-    background: rgba(212,168,64,0.1);
-    border-color: var(--gold);
-    transform: translateY(-1px);
+  .btn-back.visible { display: inline-flex; align-items: center; gap: 8px; }
+  .btn-back:hover {
+    color: var(--text);
+    border-color: rgba(255,255,255,0.2);
+    transform: translateX(-2px);
   }
 
   /* fade transition */
@@ -282,18 +307,26 @@
     from { opacity: 0; transform: translateY(16px); }
     to   { opacity: 1; transform: translateY(0); }
   }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
 
   /* ===== RESULTS ===== */
   #results { display: none; }
+  #results.visible {
+    display: block;
+    animation: fadeIn 0.7s ease both;
+  }
 
   .result-hero {
-    min-height: 100vh;
+    min-height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 80px 24px;
+    padding: 96px 24px 72px;
     position: relative;
   }
 
@@ -314,46 +347,98 @@
     letter-spacing: 0.28em;
     text-transform: uppercase;
     color: var(--muted);
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     animation: fadeUp 0.6s ease both;
   }
 
   .result-archetype-name {
     font-family: 'Fraunces', serif;
-    font-size: clamp(3.5rem, 10vw, 8rem);
+    font-size: clamp(3rem, 9vw, 7rem);
     font-weight: 900;
     line-height: 0.9;
     letter-spacing: -0.02em;
-    margin-bottom: 20px;
+    margin-bottom: 14px;
     animation: fadeUp 0.6s ease 0.1s both;
   }
 
   .result-tagline {
     font-family: 'Fraunces', serif;
     font-style: italic;
-    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-size: clamp(1.1rem, 2.6vw, 1.6rem);
     font-weight: 300;
     color: var(--muted);
-    margin-bottom: 36px;
+    margin-bottom: 24px;
     animation: fadeUp 0.6s ease 0.2s both;
   }
 
   .result-description {
     font-size: 1rem;
     font-weight: 300;
-    line-height: 1.8;
+    line-height: 1.75;
     color: var(--muted);
     max-width: 520px;
-    margin: 0 auto 48px;
+    margin: 0 auto 32px;
     animation: fadeUp 0.6s ease 0.3s both;
+  }
+
+  .result-cta-primary {
+    animation: fadeUp 0.6s ease 0.35s both;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-preview {
+    background: transparent;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 16px 32px;
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 999px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.2s, background 0.2s, transform 0.2s;
+  }
+  .btn-preview:hover {
+    border-color: var(--white);
+    background: rgba(255,255,255,0.04);
+    transform: translateY(-2px);
+  }
+
+  .btn-fiverr {
+    background: var(--gold);
+    color: #080810;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 16px 40px;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-fiverr:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 36px rgba(212,168,64,0.45);
   }
 
   .result-cta {
     display: flex;
-    gap: 14px;
+    gap: 12px;
     justify-content: center;
     flex-wrap: wrap;
-    animation: fadeUp 0.6s ease 0.4s both;
+    animation: fadeUp 0.6s ease 0.45s both;
   }
 
   .btn-retake {
@@ -361,11 +446,11 @@
     border: 1px solid var(--border);
     color: var(--muted);
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    padding: 13px 28px;
+    padding: 12px 24px;
     border-radius: 999px;
     cursor: pointer;
     transition: border-color 0.2s, color 0.2s;
@@ -373,29 +458,28 @@
   .btn-retake:hover { border-color: var(--muted); color: var(--text); }
 
   .btn-browse {
-    background: var(--gold);
-    color: #080810;
+    background: transparent;
+    color: var(--text);
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    padding: 13px 28px;
+    padding: 12px 24px;
+    border: 1px solid var(--border);
     border-radius: 999px;
-    border: none;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: border-color 0.2s, color 0.2s;
     text-decoration: none;
     display: inline-block;
   }
   .btn-browse:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(212,168,64,0.3);
+    border-color: var(--muted);
   }
 
   /* ===== BROWSE ALL ===== */
   #browse {
-    padding: 100px 24px;
+    padding: 80px 24px 100px;
     max-width: 1400px;
     margin: 0 auto;
   }
@@ -453,19 +537,26 @@
 
   .arch-card {
     border-radius: var(--radius);
-    padding: 28px 24px;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.25s;
+    padding: 28px 24px 22px;
+    cursor: default;
+    transition: transform 0.25s ease, box-shadow 0.3s ease, border-color 0.25s ease;
     position: relative;
     overflow: hidden;
-    border: 1px solid transparent;
+    border: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    flex-direction: column;
   }
   .arch-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-6px);
+    border-color: var(--arch-color, rgba(255,255,255,0.2));
+    box-shadow: 0 12px 40px -12px var(--arch-color-shadow, rgba(255,255,255,0.15));
   }
   .arch-card.is-result {
     border-color: var(--gold);
     box-shadow: 0 0 0 2px rgba(212,168,64,0.3);
+  }
+  .arch-card.is-result:hover {
+    box-shadow: 0 0 0 2px rgba(212,168,64,0.4), 0 12px 40px -12px rgba(212,168,64,0.4);
   }
 
   .arch-card-number {
@@ -517,6 +608,39 @@
     margin-top: auto;
   }
 
+  .arch-card-links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 14px;
+  }
+
+  .arch-card-link {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .arch-card-link:hover {
+    transform: translateX(3px);
+  }
+  .arch-card-link.preview {
+    color: rgba(255,255,255,0.65);
+  }
+  .arch-card-link.preview:hover {
+    color: var(--white);
+  }
+  .arch-card-link.order {
+    color: var(--arch-color, var(--text));
+    opacity: 0.85;
+  }
+  .arch-card-link.order:hover {
+    opacity: 1;
+  }
+
   .arch-result-badge {
     display: none;
     font-size: 0.58rem;
@@ -550,6 +674,24 @@
     font-style: italic;
     font-family: 'Fraunces', serif;
   }
+
+  /* ===== MOBILE (<= 480px / 375px target) ===== */
+  @media (max-width: 480px) {
+    .quiz-nav { padding: 12px 18px; }
+    .quiz-logo { font-size: 0.92rem; }
+    .quiz-counter { font-size: 0.62rem; letter-spacing: 0.12em; }
+    .progress-wrap { top: 46px; }
+    .question-stage { padding: 100px 0 120px; }
+    .q-text { margin-bottom: 32px; }
+    .answer-card { padding: 22px 20px; gap: 14px; }
+    .answer-letter { width: 32px; height: 32px; font-size: 0.88rem; }
+    .answer-text { font-size: 1rem; line-height: 1.55; }
+    .btn-back { bottom: 18px; left: 18px; padding: 9px 14px; font-size: 0.68rem; }
+    .result-hero { padding: 80px 20px 56px; }
+    .btn-fiverr { padding: 14px 30px; font-size: 0.82rem; }
+    #browse { padding: 60px 20px 80px; }
+    .browse-header { margin-bottom: 44px; }
+  }
 </style>
 </head>
 <body>
@@ -572,6 +714,8 @@
   <div class="progress-wrap"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
 
   <div class="question-stage" id="question-stage"></div>
+
+  <button class="btn-back" id="btn-back" onclick="prevQuestion()">← Back</button>
 </section>
 
 <!-- ===== RESULTS ===== -->
@@ -582,6 +726,10 @@
     <div class="result-archetype-name" id="result-name"></div>
     <div class="result-tagline" id="result-tagline"></div>
     <p class="result-description" id="result-description"></p>
+    <div class="result-cta-primary">
+      <a id="result-preview" href="#" target="_blank" rel="noopener" class="btn-preview">Preview Your Template →</a>
+      <a href="https://www.fiverr.com/sellers/kyleroberts489" target="_blank" rel="noopener" class="btn-fiverr">Get Your Website →</a>
+    </div>
     <div class="result-cta">
       <button class="btn-retake" onclick="retakeQuiz()">Retake Quiz</button>
       <a href="#browse" class="btn-browse">Browse All 12 Templates →</a>
@@ -604,6 +752,9 @@
 </section>
 
 <script>
+const FIVERR_URL = 'https://www.fiverr.com/sellers/kyleroberts489';
+const TEMPLATE_BASE = '../templates/';
+
 const ARCHETYPES = [
   {
     id: 0,
@@ -613,6 +764,7 @@ const ARCHETYPES = [
     color: '#e8b4a8',
     bg: 'linear-gradient(135deg, #3a2020, #1a1010)',
     cardBg: 'rgba(232,180,168,0.08)',
+    template: 'resume-01-innocent.html',
     description: 'You lead with honesty and warmth. People trust you instantly because you never perform — what they see is what they get. Your work is grounded in genuine care and a quiet belief that doing things right matters.',
   },
   {
@@ -623,6 +775,7 @@ const ARCHETYPES = [
     color: '#d4b890',
     bg: 'linear-gradient(135deg, #2a2010, #181208)',
     cardBg: 'rgba(212,184,144,0.08)',
+    template: 'resume-02-everyman.html',
     description: 'You are the person everyone can count on. No ego, no theater — just solid work and straight talk. You build trust through consistency, and people feel at ease around you because you never pretend to be something you\'re not.',
   },
   {
@@ -633,6 +786,7 @@ const ARCHETYPES = [
     color: '#c9a84c',
     bg: 'linear-gradient(135deg, #1a1400, #0a0a0a)',
     cardBg: 'rgba(201,168,76,0.08)',
+    template: 'resume-03-hero.html',
     description: 'You are built for high stakes. Where others hesitate, you act. Your career is defined by results — hard problems solved, things actually shipped, outcomes that matter. You don\'t need applause. You need a worthy challenge.',
   },
   {
@@ -643,6 +797,7 @@ const ARCHETYPES = [
     color: '#e63030',
     bg: 'linear-gradient(135deg, #2a0808, #0d0d0d)',
     cardBg: 'rgba(230,48,48,0.08)',
+    template: 'resume-04-outlaw.html',
     description: 'You refuse to do things the expected way. You\'ve seen what conventional looks like, and it bores you. Your best work happens when you\'re given permission to break something that needed breaking. You don\'t follow trends — you start them.',
   },
   {
@@ -653,6 +808,7 @@ const ARCHETYPES = [
     color: '#8a9e60',
     bg: 'linear-gradient(135deg, #1a2008, #0e1208)',
     cardBg: 'rgba(138,158,96,0.08)',
+    template: 'resume-05-explorer.html',
     description: 'You\'re at your best when you\'re at the edge of what\'s known. New environments, new problems, new terrain — that\'s where you thrive. You bring curiosity as a discipline and independence as a philosophy.',
   },
   {
@@ -663,6 +819,7 @@ const ARCHETYPES = [
     color: '#00b4a0',
     bg: 'linear-gradient(135deg, #001a18, #080f0e)',
     cardBg: 'rgba(0,180,160,0.08)',
+    template: 'resume-06-creator.html',
     description: 'You make things that didn\'t exist before. Whether it\'s a brand, a campaign, or a product — you build it with intention, taste, and a point of view. For you, the craft is never separate from the meaning.',
   },
   {
@@ -673,6 +830,7 @@ const ARCHETYPES = [
     color: '#b8973f',
     bg: 'linear-gradient(135deg, #0d1b2a, #060e16)',
     cardBg: 'rgba(184,151,63,0.08)',
+    template: 'resume-07-ruler.html',
     description: 'You don\'t manage from a distance — you lead from the front. You\'ve built things, owned outcomes, and made decisions that others deferred. Authority isn\'t a title for you. It\'s earned, and you know exactly how.',
   },
   {
@@ -683,6 +841,7 @@ const ARCHETYPES = [
     color: '#9c6cd4',
     bg: 'linear-gradient(135deg, #120820, #080810)',
     cardBg: 'rgba(156,108,212,0.08)',
+    template: 'resume-08-magician.html',
     description: 'You see possibilities before others even know they\'re there. You work at the intersection of ideas, technology, and human behavior — and you have a rare gift for making the impossible feel inevitable.',
   },
   {
@@ -693,6 +852,7 @@ const ARCHETYPES = [
     color: '#d4789a',
     bg: 'linear-gradient(135deg, #2a0818, #110408)',
     cardBg: 'rgba(212,120,154,0.08)',
+    template: 'resume-09-lover.html',
     description: 'You create desire. Your work isn\'t just beautiful — it makes people feel something. You understand that the finest brands don\'t sell products, they create longing. And you know exactly how to build that feeling.',
   },
   {
@@ -703,6 +863,7 @@ const ARCHETYPES = [
     color: '#5aaa8a',
     bg: 'linear-gradient(135deg, #0a1e16, #060f0d)',
     cardBg: 'rgba(90,170,138,0.08)',
+    template: 'resume-10-caregiver.html',
     description: 'Your purpose is people. Whether it\'s a patient, a team, or a community — you show up fully. Your work is an expression of care, and people feel it. You make the world softer and safer, and you do it without asking for recognition.',
   },
   {
@@ -713,6 +874,7 @@ const ARCHETYPES = [
     color: '#ffdc00',
     bg: 'linear-gradient(135deg, #1a1a00, #0e0e08)',
     cardBg: 'rgba(255,220,0,0.08)',
+    template: 'resume-11-jester.html',
     description: 'You bring the energy. Life is too short for boring work, and you\'ve built a career out of making things feel alive. You make people laugh, think, and pay attention — and that\'s a rare skill that most people underestimate.',
   },
   {
@@ -723,6 +885,7 @@ const ARCHETYPES = [
     color: '#4a9aaa',
     bg: 'linear-gradient(135deg, #0a1e24, #060e10)',
     cardBg: 'rgba(74,154,170,0.08)',
+    template: 'resume-12-sage.html',
     description: 'You know things — and more importantly, you know how to use what you know. Your value is in clarity: you cut through noise, find the real question, and explain it in a way that actually changes how people think.',
   }
 ];
@@ -821,41 +984,44 @@ const QUESTIONS = [
 ];
 
 let currentQ = 0;
-let scores = {};
-let selectedAnswer = null;
+let userAnswers = []; // userAnswers[i] = answer index chosen on question i
+let advanceTimer = null;
 
 function startQuiz() {
   document.getElementById('intro').style.display = 'none';
   document.getElementById('quiz').style.display = 'block';
-  scores = {};
-  ARCHETYPES.forEach(a => scores[a.id] = 0);
+  currentQ = 0;
+  userAnswers = [];
   renderQuestion();
 }
 
 function renderQuestion() {
+  if (advanceTimer) { clearTimeout(advanceTimer); advanceTimer = null; }
+
   const q = QUESTIONS[currentQ];
   const letters = ['A', 'B', 'C', 'D'];
-  selectedAnswer = null;
 
   document.getElementById('quiz-counter').textContent = `Question ${currentQ + 1} of ${QUESTIONS.length}`;
   document.getElementById('progress-fill').style.width = `${(currentQ / QUESTIONS.length) * 100}%`;
 
   const stage = document.getElementById('question-stage');
+  const prior = userAnswers[currentQ];
   stage.innerHTML = `
     <div class="q-number">Question ${String(currentQ + 1).padStart(2, '0')}</div>
     <div class="q-text">${q.q}</div>
     <div class="answers-grid">
       ${q.answers.map((a, i) => `
-        <div class="answer-card" onclick="selectAnswer(${i})" id="ans-${i}">
+        <div class="answer-card${prior === i ? ' selected' : ''}" onclick="selectAnswer(${i})" id="ans-${i}">
           <div class="answer-letter">${letters[i]}</div>
           <div class="answer-text">${a.text}</div>
         </div>
       `).join('')}
     </div>
-    <button class="btn-next" id="btn-next" onclick="nextQuestion()">
-      ${currentQ < QUESTIONS.length - 1 ? 'Next Question →' : 'See My Result →'}
-    </button>
   `;
+
+  // Back button visibility
+  const backBtn = document.getElementById('btn-back');
+  backBtn.classList.toggle('visible', currentQ > 0);
 
   // Re-trigger animation
   stage.style.animation = 'none';
@@ -864,34 +1030,43 @@ function renderQuestion() {
 }
 
 function selectAnswer(i) {
-  selectedAnswer = i;
+  if (advanceTimer) return; // already advancing — ignore further taps
+  userAnswers[currentQ] = i;
   document.querySelectorAll('.answer-card').forEach((c, idx) => {
     c.classList.toggle('selected', idx === i);
   });
-  const btn = document.getElementById('btn-next');
-  if (btn) btn.classList.add('visible');
+
+  advanceTimer = setTimeout(() => {
+    advanceTimer = null;
+    currentQ++;
+    if (currentQ < QUESTIONS.length) {
+      renderQuestion();
+    } else {
+      showResults();
+    }
+  }, 500);
 }
 
-function nextQuestion() {
-  if (selectedAnswer === null) return;
-
-  const q = QUESTIONS[currentQ];
-  const answerScores = q.answers[selectedAnswer].scores;
-  for (const [id, pts] of Object.entries(answerScores)) {
-    scores[parseInt(id)] = (scores[parseInt(id)] || 0) + pts;
-  }
-
-  currentQ++;
-  if (currentQ < QUESTIONS.length) {
-    renderQuestion();
-  } else {
-    showResults();
-  }
+function prevQuestion() {
+  if (advanceTimer) { clearTimeout(advanceTimer); advanceTimer = null; }
+  if (currentQ === 0) return;
+  currentQ--;
+  renderQuestion();
 }
 
 function showResults() {
+  // Compute scores fresh from userAnswers
+  const scores = {};
+  ARCHETYPES.forEach(a => scores[a.id] = 0);
+  userAnswers.forEach((ansIdx, qIdx) => {
+    const answerScores = QUESTIONS[qIdx].answers[ansIdx].scores;
+    for (const [id, pts] of Object.entries(answerScores)) {
+      scores[parseInt(id)] = (scores[parseInt(id)] || 0) + pts;
+    }
+  });
+
   document.getElementById('quiz').style.display = 'none';
-  document.getElementById('results').style.display = 'block';
+  document.getElementById('btn-back').classList.remove('visible');
 
   const topId = Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
   const archetype = ARCHETYPES[parseInt(topId)];
@@ -901,32 +1076,55 @@ function showResults() {
   document.getElementById('result-name').style.color = archetype.color;
   document.getElementById('result-tagline').textContent = archetype.tagline;
   document.getElementById('result-description').textContent = archetype.description;
+  document.getElementById('result-preview').href = TEMPLATE_BASE + archetype.template;
 
   renderBrowseGrid(parseInt(topId));
+
+  const results = document.getElementById('results');
+  results.classList.add('visible');
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+function hexToRgba(hex, alpha) {
+  const h = hex.replace('#', '');
+  const bigint = parseInt(h, 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
 function renderBrowseGrid(resultId) {
   const grid = document.getElementById('archetypes-grid');
-  grid.innerHTML = ARCHETYPES.map((a, i) => `
-    <div class="arch-card ${a.id === resultId ? 'is-result' : ''}"
-         style="background: ${a.cardBg}; border-color: ${a.id === resultId ? a.color : 'rgba(255,255,255,0.07)'};">
+  grid.innerHTML = ARCHETYPES.map((a, i) => {
+    const isResult = a.id === resultId;
+    const shadow = hexToRgba(a.color, 0.35);
+    return `
+    <div class="arch-card ${isResult ? 'is-result' : ''}"
+         style="background: ${a.cardBg}; --arch-color: ${a.color}; --arch-color-shadow: ${shadow};${isResult ? '' : ` border-color: rgba(255,255,255,0.07);`}">
       <div class="arch-result-badge">✦ Your Result</div>
       <div class="arch-card-number" style="color:${a.color}">${String(i + 1).padStart(2, '0')}</div>
       <div class="arch-card-label" style="color:${a.color}">Archetype</div>
-      <div class="arch-card-name" style="color:${a.id === resultId ? a.color : 'var(--white)'}">${a.name}</div>
+      <div class="arch-card-name" style="color:${isResult ? a.color : 'var(--white)'}">${a.name}</div>
       <div class="arch-card-tagline">${a.tagline}</div>
       <div class="arch-card-persona">Persona: ${a.persona}</div>
+      <div class="arch-card-links">
+        <a href="${TEMPLATE_BASE}${a.template}" target="_blank" rel="noopener" class="arch-card-link preview">Preview template →</a>
+        <a href="${FIVERR_URL}" target="_blank" rel="noopener" class="arch-card-link order" style="color:${a.color}">Order this template →</a>
+      </div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 }
 
 function retakeQuiz() {
   currentQ = 0;
-  scores = {};
-  selectedAnswer = null;
-  document.getElementById('results').style.display = 'none';
+  userAnswers = [];
+  if (advanceTimer) { clearTimeout(advanceTimer); advanceTimer = null; }
+  const results = document.getElementById('results');
+  results.classList.remove('visible');
+  results.style.display = 'none';
   document.getElementById('intro').style.display = 'flex';
   window.scrollTo({ top: 0 });
 }
