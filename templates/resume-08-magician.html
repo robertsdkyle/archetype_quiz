@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orion Vael — Innovation Catalyst &amp; Experience Architect</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Raleway:wght@200;300;400;500;600;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --void: #060611;
+    --deep: #0a0a18;
+    --panel: #11112a;
+    --panel-2: #161636;
+    --purple: #4a2f7a;
+    --purple-glow: #7c52b8;
+    --purple-deep: #2a1850;
+    --gold: #e0c060;
+    --gold-soft: #f0d890;
+    --gold-dim: #8a7030;
+    --star: #fffbe8;
+    --text: #c8c0e8;
+    --text-soft: #a098c8;
+    --muted: #706890;
+    --line: rgba(74,47,122,0.4);
+
+    --display: 'Libre Baskerville', Georgia, serif;
+    --sans: 'Raleway', system-ui, sans-serif;
+
+    --pad-section: clamp(80px, 11vw, 160px);
+    --pad-x: clamp(20px, 5vw, 96px);
+    --ease: cubic-bezier(.2,.7,.2,1);
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--void);
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(74,47,122,0.45), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 0% 30%, rgba(124,82,184,0.18), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 100% 60%, rgba(224,192,96,0.08), transparent 60%);
+    background-attachment: fixed;
+    font-family: var(--sans);
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* starfield (twinkle preserved per Magician convention) */
+  .stars {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  }
+  .star {
+    position: absolute;
+    background: var(--star); border-radius: 50%;
+    animation: twinkle var(--dur, 3s) ease-in-out infinite var(--delay, 0s);
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: var(--min, 0.2); }
+    50% { opacity: var(--max, 0.9); }
+  }
+  body > *:not(.stars) { position: relative; z-index: 1; }
+
+  .reveal { opacity: 0; transform: translateY(24px); filter: blur(4px); transition: opacity 1s var(--ease), transform 1s var(--ease), filter 1s var(--ease); }
+  .reveal.in { opacity: 1; transform: none; filter: blur(0); }
+  .reveal.d1 { transition-delay: .1s; }
+  .reveal.d2 { transition-delay: .2s; }
+  .reveal.d3 { transition-delay: .3s; }
+  .reveal.d4 { transition-delay: .4s; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: rgba(6,6,17,0);
+    transition: background .5s var(--ease), padding .4s var(--ease), border-color .4s var(--ease);
+    padding: 22px var(--pad-x);
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 100;
+    border-bottom: 1px solid transparent;
+  }
+  nav.scrolled {
+    background: rgba(6,6,17,0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    padding: 14px var(--pad-x);
+    border-bottom-color: var(--line);
+  }
+  .nav-mark {
+    font-family: var(--display);
+    font-size: 1.05rem;
+    color: var(--star);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-shadow: 0 0 16px rgba(224,192,96,0.4);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .nav-mark::before { content: '✦'; color: var(--gold); font-size: 0.85rem; }
+  .nav-links {
+    display: flex; gap: 32px;
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 0.7rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+  }
+  .nav-links a { padding: 6px 0; transition: color .3s, text-shadow .3s; position: relative; }
+  .nav-links a:hover { color: var(--gold); text-shadow: 0 0 12px rgba(224,192,96,0.6); }
+  @media (max-width: 720px) { .nav-links { display: none; } }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    padding: 130px var(--pad-x) 80px;
+    text-align: center;
+    position: relative;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%; width: 800px; height: 800px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(124,82,184,0.18) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 0.7rem;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 36px;
+  }
+  .hero-eyebrow span { color: var(--gold); margin: 0 12px; }
+
+  .hero-sigil {
+    width: 140px; height: 140px;
+    margin: 0 auto 44px;
+    filter: drop-shadow(0 0 24px rgba(224,192,96,0.4));
+  }
+
+  .hero-name {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(3.2rem, 11vw, 9.5rem);
+    line-height: 0.95;
+    letter-spacing: 0.04em;
+    color: var(--star);
+    text-shadow:
+      0 0 40px rgba(224,192,96,0.35),
+      0 0 80px rgba(124,82,184,0.5);
+  }
+  .hero-name em { font-style: italic; color: var(--gold-soft); }
+
+  .hero-tag {
+    margin-top: 36px;
+    font-family: var(--display);
+    font-style: italic;
+    font-size: clamp(1rem, 1.6vw, 1.25rem);
+    color: var(--gold);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .hero-rule {
+    margin: 56px auto 36px;
+    max-width: 360px;
+    display: flex; align-items: center; gap: 18px;
+  }
+  .hero-rule .line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+  .hero-rule .line.r { background: linear-gradient(270deg, transparent, var(--gold)); }
+  .hero-rule .glyph {
+    color: var(--gold);
+    font-size: 1.4rem;
+    text-shadow: 0 0 16px rgba(224,192,96,0.7);
+  }
+
+  .hero-thresh {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+    color: var(--text);
+    max-width: 50ch;
+    margin: 0 auto;
+    line-height: 1.55;
+  }
+  .hero-thresh b { font-style: normal; font-weight: 700; color: var(--gold); }
+
+  .hero-orbs {
+    margin-top: 64px;
+    display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+  }
+  .orb {
+    background: rgba(74,47,122,0.18);
+    border: 1px solid var(--line);
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 0.78rem;
+    padding: 12px 22px;
+    border-radius: 999px;
+    letter-spacing: 0.06em;
+    min-height: 44px;
+    display: inline-flex; align-items: center;
+    transition: all .35s var(--ease);
+    backdrop-filter: blur(8px);
+  }
+  .orb:hover {
+    background: rgba(124,82,184,0.25);
+    border-color: var(--gold);
+    color: var(--gold);
+    box-shadow: 0 0 24px rgba(224,192,96,0.25);
+  }
+
+  /* ─── SECTION ─── */
+  section.block {
+    padding: var(--pad-section) var(--pad-x);
+    position: relative;
+  }
+  section.block.veil {
+    background:
+      radial-gradient(ellipse 100% 50% at 50% 0%, rgba(74,47,122,0.18), transparent 70%),
+      var(--deep);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .section-tag {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 0.7rem;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .section-tag::before { content: '✦'; color: var(--gold); font-size: 0.8rem; text-shadow: 0 0 12px rgba(224,192,96,0.7); }
+  .section-tag::after { content: ''; flex: 1; height: 1px; max-width: 240px; background: linear-gradient(90deg, var(--gold-dim), transparent); }
+
+  .section-headline {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(2.4rem, 6vw, 4.6rem);
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+    color: var(--star);
+    max-width: 22ch;
+    text-shadow: 0 0 32px rgba(124,82,184,0.5);
+  }
+  .section-headline em { font-style: italic; color: var(--gold-soft); }
+
+  /* ─── VISION ─── */
+  .vision-grid {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .vision-prose p {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: clamp(1.15rem, 2vw, 1.55rem);
+    line-height: 1.6;
+    color: var(--text);
+    font-weight: 400;
+  }
+  .vision-prose p + p { margin-top: 1.1em; }
+  .vision-prose b { font-style: normal; font-weight: 700; color: var(--gold-soft); }
+  .vision-prose p:first-child::first-letter {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 5em;
+    float: left;
+    line-height: 0.85;
+    margin: 8px 14px 0 0;
+    color: var(--gold);
+    text-shadow: 0 0 24px rgba(224,192,96,0.5);
+  }
+  .vision-card {
+    border: 1px solid var(--line);
+    background:
+      radial-gradient(ellipse at top right, rgba(124,82,184,0.15), transparent 60%),
+      rgba(11,11,30,0.6);
+    backdrop-filter: blur(8px);
+    padding: 40px 36px;
+    box-shadow: 0 30px 80px -30px rgba(74,47,122,0.5);
+    position: relative;
+  }
+  .vision-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .vision-card h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--gold);
+    margin-bottom: 24px;
+    letter-spacing: 0.04em;
+  }
+  .vc-line {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 0.9rem;
+    color: var(--text-soft);
+  }
+  .vc-line:last-child { border-bottom: none; }
+  .vc-line b {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--star);
+    text-shadow: 0 0 12px rgba(224,192,96,0.3);
+  }
+  @media (max-width: 820px) { .vision-grid { grid-template-columns: 1fr; gap: 32px; } }
+
+  /* ─── TRANSFORMATIONS ─── */
+  .transformations { margin-top: 64px; }
+  .trans {
+    border-top: 1px solid var(--gold-dim);
+    padding: 56px 0;
+    display: grid;
+    grid-template-columns: 1fr 2.2fr;
+    gap: 56px;
+    transition: padding-left .35s var(--ease);
+    position: relative;
+  }
+  .trans::before {
+    content: '';
+    position: absolute; left: -2px; top: 0;
+    width: 0; height: 100%;
+    background: linear-gradient(180deg, var(--gold), transparent);
+    transition: width .35s var(--ease);
+  }
+  .trans:hover { padding-left: 16px; }
+  .trans:hover::before { width: 2px; }
+  .trans:last-child { border-bottom: 1px solid var(--gold-dim); }
+
+  .trans-meta {
+    font-family: var(--sans);
+  }
+  .trans-roman {
+    font-family: var(--display);
+    font-weight: 700;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--gold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .trans-era {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--star);
+    letter-spacing: 0.06em;
+    text-shadow: 0 0 16px rgba(224,192,96,0.3);
+  }
+  .trans-loc {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+  .trans-title {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+    line-height: 1.2;
+    color: var(--star);
+    margin-bottom: 8px;
+  }
+  .trans-org {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--purple-glow);
+    margin-bottom: 22px;
+  }
+  .trans-list { list-style: none; display: grid; gap: 12px; max-width: 80ch; }
+  .trans-list li {
+    padding-left: 26px;
+    position: relative;
+    font-size: 1rem;
+    color: var(--text);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+  .trans-list li::before {
+    content: '✧';
+    position: absolute; left: 0; top: 4px;
+    color: var(--gold);
+    text-shadow: 0 0 10px rgba(224,192,96,0.6);
+  }
+  @media (max-width: 820px) { .trans { grid-template-columns: 1fr; gap: 16px; padding: 40px 0; } }
+
+  /* ─── DISCIPLINES ─── */
+  .disc-grid {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--gold-dim);
+    border-left: 1px solid var(--gold-dim);
+  }
+  @media (max-width: 1180px) { .disc-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 720px)  { .disc-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 440px)  { .disc-grid { grid-template-columns: 1fr; } }
+  .disc-cell {
+    padding: 36px 32px;
+    border-right: 1px solid var(--gold-dim);
+    border-bottom: 1px solid var(--gold-dim);
+    transition: background .35s var(--ease);
+    position: relative;
+    overflow: hidden;
+  }
+  .disc-cell::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 100%, rgba(124,82,184,0.18), transparent 70%);
+    opacity: 0; transition: opacity .4s;
+  }
+  .disc-cell:hover::before { opacity: 1; }
+  .disc-cell:hover .dc-glyph { transform: rotate(45deg) scale(1.15); }
+  .dc-glyph {
+    font-size: 1.4rem; color: var(--gold);
+    text-shadow: 0 0 16px rgba(224,192,96,0.5);
+    margin-bottom: 14px;
+    transition: transform .5s var(--ease);
+    display: inline-block;
+  }
+  .dc-name {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--star);
+    margin-bottom: 8px;
+    letter-spacing: 0.04em;
+  }
+  .dc-pips {
+    display: flex; gap: 6px; margin-bottom: 14px;
+  }
+  .pip {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(74,47,122,0.5);
+    border: 1px solid var(--purple-glow);
+  }
+  .pip.lit {
+    background: var(--gold);
+    border-color: var(--gold);
+    box-shadow: 0 0 8px rgba(224,192,96,0.7);
+  }
+  .dc-level {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--text-soft);
+  }
+
+  /* ─── SPELLS / TOOLS ─── */
+  .spells-wrap { margin-top: 56px; display: flex; flex-wrap: wrap; gap: 12px; max-width: 1100px; }
+  .spell {
+    background: rgba(74,47,122,0.18);
+    border: 1px solid var(--line);
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 0.85rem;
+    padding: 12px 22px;
+    min-height: 44px;
+    display: inline-flex; align-items: center; gap: 8px;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+    transition: all .35s var(--ease);
+    cursor: default;
+  }
+  .spell::before { content: '✧'; color: var(--gold); }
+  .spell:hover {
+    background: rgba(124,82,184,0.3);
+    border-color: var(--gold);
+    color: var(--gold-soft);
+    box-shadow: 0 0 24px rgba(224,192,96,0.2);
+    transform: translateY(-2px);
+  }
+
+  /* ─── CREDENTIALS ─── */
+  .creds-list { margin-top: 56px; max-width: 920px; }
+  .cred-row {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 32px;
+    padding: 28px 0;
+    border-top: 1px solid var(--line);
+    align-items: center;
+    transition: padding-left .3s var(--ease);
+  }
+  .cred-row:last-child { border-bottom: 1px solid var(--line); }
+  .cred-row:hover { padding-left: 14px; }
+  .cred-roman {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1.4rem;
+    color: var(--gold);
+    letter-spacing: 0.06em;
+    text-shadow: 0 0 12px rgba(224,192,96,0.4);
+  }
+  .cred-name {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(1.15rem, 2vw, 1.4rem);
+    color: var(--star);
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .cred-meta {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 0.9rem;
+    color: var(--text-soft);
+    letter-spacing: 0.04em;
+  }
+  .cred-year {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  @media (max-width: 720px) { .cred-row { grid-template-columns: 50px 1fr; } .cred-year { grid-column: 2; } }
+
+  /* ─── CONTACT ─── */
+  .contact { text-align: center; }
+  .contact-headline {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(2.6rem, 7vw, 5.4rem);
+    line-height: 1.1;
+    color: var(--star);
+    max-width: 22ch;
+    margin: 0 auto;
+    text-shadow: 0 0 40px rgba(124,82,184,0.6);
+  }
+  .contact-headline em { font-style: italic; color: var(--gold); }
+  .contact-deck {
+    margin: 32px auto 0;
+    max-width: 56ch;
+    font-family: var(--display);
+    font-style: italic;
+    font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+    color: var(--text-soft);
+    line-height: 1.55;
+  }
+  .contact-grid {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0;
+    border-top: 1px solid var(--gold-dim);
+    border-left: 1px solid var(--gold-dim);
+    max-width: 1100px;
+    margin-left: auto; margin-right: auto;
+  }
+  .contact-cell {
+    padding: 32px 24px;
+    border-right: 1px solid var(--gold-dim);
+    border-bottom: 1px solid var(--gold-dim);
+    text-align: left;
+    transition: background .35s var(--ease);
+    min-height: 110px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .contact-cell:hover {
+    background: rgba(124,82,184,0.18);
+  }
+  .contact-cell:hover .cc-value { color: var(--gold); text-shadow: 0 0 12px rgba(224,192,96,0.4); }
+  .cc-label {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 0.62rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .cc-value {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--star);
+    transition: color .3s, text-shadow .3s;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 32px var(--pad-x);
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    text-align: center;
+    background: rgba(0,0,0,0.4);
+  }
+  .glyph-row {
+    color: var(--gold);
+    font-size: 1rem;
+    letter-spacing: 0.5em;
+    text-shadow: 0 0 12px rgba(224,192,96,0.5);
+  }
+  footer .meta {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 0.7rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  @media (max-width: 600px) {
+    section.block { padding: 80px 20px; }
+    .hero { padding: 130px 20px 64px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- starfield -->
+<div class="stars" aria-hidden="true">
+  <div class="star" style="width:2px;height:2px;top:8%;left:12%;--dur:2.4s;--delay:0.2s;--min:0.3;--max:0.9;"></div>
+  <div class="star" style="width:1px;height:1px;top:15%;left:78%;--dur:3.1s;--delay:0.8s;--min:0.2;--max:0.7;"></div>
+  <div class="star" style="width:2px;height:2px;top:6%;left:45%;--dur:2.8s;--delay:1.2s;--min:0.4;--max:1;"></div>
+  <div class="star" style="width:1px;height:1px;top:22%;left:90%;--dur:3.5s;--delay:0.4s;--min:0.2;--max:0.6;"></div>
+  <div class="star" style="width:3px;height:3px;top:3%;left:62%;--dur:2.1s;--delay:1.6s;--min:0.5;--max:1;"></div>
+  <div class="star" style="width:1px;height:1px;top:70%;left:5%;--dur:4s;--delay:0.6s;--min:0.1;--max:0.5;"></div>
+  <div class="star" style="width:2px;height:2px;top:88%;left:82%;--dur:2.6s;--delay:2s;--min:0.3;--max:0.8;"></div>
+  <div class="star" style="width:1px;height:1px;top:55%;left:96%;--dur:3.3s;--delay:0.1s;--min:0.2;--max:0.6;"></div>
+  <div class="star" style="width:2px;height:2px;top:42%;left:2%;--dur:2.9s;--delay:1s;--min:0.3;--max:0.9;"></div>
+  <div class="star" style="width:1px;height:1px;top:78%;left:55%;--dur:3.7s;--delay:0.5s;--min:0.1;--max:0.5;"></div>
+  <div class="star" style="width:2px;height:2px;top:32%;left:30%;--dur:2.5s;--delay:1.4s;--min:0.3;--max:0.8;"></div>
+  <div class="star" style="width:1px;height:1px;top:62%;left:38%;--dur:3.9s;--delay:0.3s;--min:0.2;--max:0.6;"></div>
+  <div class="star" style="width:2px;height:2px;top:48%;left:70%;--dur:2.7s;--delay:1.8s;--min:0.3;--max:0.85;"></div>
+  <div class="star" style="width:1px;height:1px;top:92%;left:18%;--dur:3.2s;--delay:0.7s;--min:0.2;--max:0.7;"></div>
+</div>
+
+<nav id="nav">
+  <a href="#top" class="nav-mark">Orion Vael</a>
+  <div class="nav-links">
+    <a href="#vision">Vision</a>
+    <a href="#trans">Transformations</a>
+    <a href="#disc">Disciplines</a>
+    <a href="#creds">Credentials</a>
+    <a href="#contact">Threshold</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="reveal"><div class="hero-eyebrow">Innovation Catalyst <span>✦</span> Experience Architect <span>✦</span> Digital Alchemist</div></div>
+
+  <svg class="hero-sigil reveal d1" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="70" cy="70" r="68" stroke="rgba(224,192,96,0.4)" stroke-width="0.6" fill="none"/>
+    <circle cx="70" cy="70" r="56" stroke="rgba(224,192,96,0.25)" stroke-width="0.5" fill="none"/>
+    <circle cx="70" cy="70" r="44" stroke="rgba(124,82,184,0.6)" stroke-width="0.6" fill="none"/>
+    <polygon points="70,12 80,52 122,52 88,76 100,118 70,92 40,118 52,76 18,52 60,52" stroke="rgba(224,192,96,0.85)" stroke-width="0.8" fill="rgba(74,47,122,0.25)"/>
+    <circle cx="70" cy="70" r="6" fill="rgba(224,192,96,0.9)"/>
+    <line x1="70" y1="2" x2="70" y2="20" stroke="rgba(224,192,96,0.5)" stroke-width="0.5"/>
+    <line x1="70" y1="120" x2="70" y2="138" stroke="rgba(224,192,96,0.5)" stroke-width="0.5"/>
+    <line x1="2" y1="70" x2="20" y2="70" stroke="rgba(224,192,96,0.5)" stroke-width="0.5"/>
+    <line x1="120" y1="70" x2="138" y2="70" stroke="rgba(224,192,96,0.5)" stroke-width="0.5"/>
+  </svg>
+
+  <h1 class="hero-name reveal d1">Orion <em>Vael</em></h1>
+  <div class="hero-tag reveal d2">— Architect of Hidden Doors —</div>
+
+  <div class="hero-rule reveal d2">
+    <div class="line"></div>
+    <div class="glyph">✦</div>
+    <div class="line r"></div>
+  </div>
+
+  <p class="hero-thresh reveal d3">Twelve years transforming how organizations experience themselves and their customers — through technology, design, and ideas that were <b>impossible until they weren't</b>.</p>
+
+  <div class="hero-orbs reveal d4">
+    <span class="orb">orion@vaelstudio.com</span>
+    <span class="orb">+1 (555) 890-1234</span>
+    <span class="orb">New York, NY</span>
+    <span class="orb">vaelstudio.com</span>
+  </div>
+</header>
+
+<!-- VISION -->
+<section class="block" id="vision">
+  <div class="reveal">
+    <div class="section-tag">— I — The Vision</div>
+    <h2 class="section-headline">Every problem contains a <em>hidden door</em>. My work is finding it.</h2>
+  </div>
+  <div class="vision-grid">
+    <div class="vision-prose reveal d1">
+      <p>I work at the threshold where technology, behavior, and imagination meet — turning organizations toward futures they could feel but couldn't yet name. The role keeps changing names: catalyst, architect, alchemist. The work doesn't.</p>
+      <p>Most transformation projects fail because they treat the surface and ignore the system. <b>I begin where the system actually lives</b> — in the rituals, incentives, and unspoken stories of the people inside it — then build from there outward, with technology as the spell, never the substance.</p>
+    </div>
+    <div class="vision-card reveal d2">
+      <h4>✦ Current Practice</h4>
+      <div class="vc-line"><span>R&amp;D Cycles</span><b>90 days</b></div>
+      <div class="vc-line"><span>Innovation Lab</span><b>24 souls</b></div>
+      <div class="vc-line"><span>F500 Clients</span><b>3 active</b></div>
+      <div class="vc-line"><span>Practice Revenue</span><b>$28M</b></div>
+      <div class="vc-line"><span>Years in Craft</span><b>XII</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSFORMATIONS -->
+<section class="block veil" id="trans">
+  <div class="reveal">
+    <div class="section-tag">— II — Transformations</div>
+    <h2 class="section-headline">Two long passages. <em>Many doors</em> opened.</h2>
+  </div>
+  <div class="transformations">
+    <article class="trans reveal">
+      <div class="trans-meta">
+        <div class="trans-roman">Passage I</div>
+        <div class="trans-era">2020 — Now</div>
+        <div class="trans-loc">New York, NY</div>
+      </div>
+      <div>
+        <h3 class="trans-title">Chief Innovation Officer</h3>
+        <div class="trans-org">Nexum Labs</div>
+        <ul class="trans-list">
+          <li>Architected AI-driven customer experience platform adopted by 3 Fortune 500 clients</li>
+          <li>Led 24-person innovation lab spanning design, engineering, and behavioral science</li>
+          <li>Transformed R&amp;D pipeline from 18-month cycles to 90-day proof-of-concept sprints</li>
+          <li>Generated $28M in new business through emerging technology advisory practice</li>
+        </ul>
+      </div>
+    </article>
+    <article class="trans reveal">
+      <div class="trans-meta">
+        <div class="trans-roman">Passage II</div>
+        <div class="trans-era">2016 — 2020</div>
+        <div class="trans-loc">San Francisco, CA</div>
+      </div>
+      <div>
+        <h3 class="trans-title">Director of Digital Transformation</h3>
+        <div class="trans-org">Prism Consulting Group</div>
+        <ul class="trans-list">
+          <li>Delivered 12 enterprise digital transformations across healthcare, finance, and retail</li>
+          <li>Pioneered immersive customer journey mapping practice adopted firm-wide</li>
+          <li>Reduced average transformation timelines by 32% through proprietary sprint methodology</li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- DISCIPLINES -->
+<section class="block" id="disc">
+  <div class="reveal">
+    <div class="section-tag">— III — Disciplines</div>
+    <h2 class="section-headline">Six <em>arts</em> kept sharp.</h2>
+  </div>
+  <div class="disc-grid">
+    <div class="disc-cell reveal">
+      <span class="dc-glyph">✦</span>
+      <div class="dc-name">Innovation Strategy</div>
+      <div class="dc-pips"><div class="pip lit"></div><div class="pip lit"></div><div class="pip lit"></div><div class="pip lit"></div><div class="pip lit"></div></div>
+      <div class="dc-level">Mastered</div>
+    </div>
+    <div class="disc-cell reveal d1">
+      <span class="dc-glyph">✧</span>
+      <div class="dc-name">Workshop Facilitation</div>
+      <div class="dc-pips"><div class="pip lit"></div><div class="pip lit"></div><div class="pip lit"></div><div class="pip lit"></div><div class="pip lit"></div></div>
+      <div class="dc-level">Mastered</div>
+    </div>
+    <div class="disc-cell reveal d2">
+      <span class="dc-glyph">⬢</span>
+      <div class="dc-name">Systems Thinking</div>
+      <div class="dc-pips"><div class="pip lit"></div><div class="pip lit"></div><div class="pip lit"></div><div class="pip lit"></div><div class="pip lit"></div></div>
+      <div class="dc-level">Mastered</div>
+    </div>
+    <div class="disc-cell reveal">
+      <span class="dc-glyph">◈</span>
+      <div class="dc-name">UX Architecture</div>
+      <div class="dc-pips"><div class="pip lit"></div><div class="pip lit"></div><div class="pip lit"></div><div class="pip lit"></div><div class="pip"></div></div>
+      <div class="dc-level">Practiced</div>
+    </div>
+    <div class="disc-cell reveal d1">
+      <span class="dc-glyph">⟁</span>
+      <div class="dc-name">AI / ML Applications</div>
+      <div class="dc-pips"><div class="pip lit"></div><div class="pip lit"></div><div class="pip lit"></div><div class="pip lit"></div><div class="pip"></div></div>
+      <div class="dc-level">Practiced</div>
+    </div>
+    <div class="disc-cell reveal d2">
+      <span class="dc-glyph">✶</span>
+      <div class="dc-name">Speculative Design</div>
+      <div class="dc-pips"><div class="pip lit"></div><div class="pip lit"></div><div class="pip lit"></div><div class="pip"></div><div class="pip"></div></div>
+      <div class="dc-level">Studied</div>
+    </div>
+  </div>
+
+  <div class="reveal" style="margin-top: 100px;">
+    <div class="section-tag">— IV — Spells &amp; Tools</div>
+    <h2 class="section-headline">The <em>instruments</em> of the studio.</h2>
+  </div>
+  <div class="spells-wrap reveal d1">
+    <span class="spell">Figma</span>
+    <span class="spell">Python</span>
+    <span class="spell">TensorFlow</span>
+    <span class="spell">Miro</span>
+    <span class="spell">Design Thinking</span>
+    <span class="spell">Jobs to be Done</span>
+    <span class="spell">Notion</span>
+    <span class="spell">Keynote</span>
+    <span class="spell">Speculative Prototyping</span>
+    <span class="spell">Workshop Design</span>
+  </div>
+</section>
+
+<!-- CREDENTIALS -->
+<section class="block veil" id="creds">
+  <div class="reveal">
+    <div class="section-tag">— V — Credentials &amp; Marks</div>
+    <h2 class="section-headline">Where the <em>training</em> was forged.</h2>
+  </div>
+  <div class="creds-list">
+    <div class="cred-row reveal">
+      <div class="cred-roman">I.</div>
+      <div>
+        <div class="cred-name">M.S. Human-Computer Interaction</div>
+        <div class="cred-meta">Carnegie Mellon University</div>
+      </div>
+      <div class="cred-year">2014</div>
+    </div>
+    <div class="cred-row reveal">
+      <div class="cred-roman">II.</div>
+      <div>
+        <div class="cred-name">B.S. Cognitive Science</div>
+        <div class="cred-meta">New York University</div>
+      </div>
+      <div class="cred-year">2012</div>
+    </div>
+    <div class="cred-row reveal">
+      <div class="cred-roman">III.</div>
+      <div>
+        <div class="cred-name">"When Systems Dream"</div>
+        <div class="cred-meta">Speaker · TED·NYC</div>
+      </div>
+      <div class="cred-year">2023</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="block contact" id="contact">
+  <div class="reveal">
+    <div class="section-tag" style="justify-content: center;">— VI — Cross the Threshold</div>
+    <h2 class="contact-headline">If you're standing at <em>a hidden door</em> — let me know.</h2>
+    <p class="contact-deck">Open to advisory engagements, lab partnerships, and select transformation work. Quietly selective. Reach in plain language.</p>
+  </div>
+  <div class="contact-grid reveal d1">
+    <a class="contact-cell" href="mailto:orion@vaelstudio.com">
+      <div class="cc-label">✦ Direct</div>
+      <div class="cc-value">orion@vaelstudio.com</div>
+    </a>
+    <a class="contact-cell" href="tel:+15558901234">
+      <div class="cc-label">✦ Voice</div>
+      <div class="cc-value">+1 (555) 890-1234</div>
+    </a>
+    <a class="contact-cell" href="#">
+      <div class="cc-label">✦ Studio</div>
+      <div class="cc-value">vaelstudio.com</div>
+    </a>
+    <a class="contact-cell" href="#">
+      <div class="cc-label">✦ Seat</div>
+      <div class="cc-value">New York, NY</div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="glyph-row">✦ ✦ ✦</div>
+  <div class="meta">© Orion Vael · MMXXVI · vaelstudio.com</div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 30);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

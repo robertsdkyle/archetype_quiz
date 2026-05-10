@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>James T. Harrington — Operations Manager</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --paper: #f4f0e8;
+    --paper-deep: #ece5d3;
+    --warm: #e8e0d0;
+    --ink: #1c1a16;
+    --ink-soft: #2a2620;
+    --mid: #5a5245;
+    --rule: #c8bc9e;
+    --rule-soft: #d8cdb0;
+    --red: #9e2a2b;
+    --red-deep: #7a1f20;
+
+    --serif: 'Playfair Display', Georgia, serif;
+    --body: 'Source Serif 4', Georgia, serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+
+    --pad-section: clamp(72px, 10vw, 140px);
+    --pad-x: clamp(20px, 5vw, 80px);
+    --ease: cubic-bezier(.2,.7,.2,1);
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(0,0,0,0.025), transparent 60%),
+      radial-gradient(circle at 80% 90%, rgba(0,0,0,0.03), transparent 60%);
+    font-family: var(--body);
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+  .reveal.d1 { transition-delay: .08s; }
+  .reveal.d2 { transition-delay: .16s; }
+  .reveal.d3 { transition-delay: .24s; }
+  .reveal.d4 { transition-delay: .32s; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: var(--paper);
+    border-bottom: 1px solid var(--ink);
+    padding: 12px var(--pad-x);
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 100;
+    font-family: var(--mono);
+  }
+  nav::before {
+    content: ''; position: absolute; left: 0; right: 0; bottom: -4px;
+    height: 3px; background: var(--red);
+  }
+  .nav-mark {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+  }
+  .nav-mark::after {
+    content: ' · EST 2016';
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 0.65rem;
+    color: var(--mid);
+    letter-spacing: 0.18em;
+    margin-left: 8px;
+  }
+  .nav-links {
+    display: flex; gap: 28px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--mid);
+  }
+  .nav-links a { transition: color .2s; padding: 6px 0; border-bottom: 2px solid transparent; }
+  .nav-links a:hover { color: var(--red); border-bottom-color: var(--red); }
+
+  @media (max-width: 720px) { .nav-links { display: none; } .nav-mark::after { display: none; } }
+
+  /* ─── HERO / MASTHEAD ─── */
+  .hero {
+    padding: 140px var(--pad-x) 60px;
+    border-bottom: 6px solid var(--ink);
+    position: relative;
+  }
+  .hero::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: -10px;
+    height: 3px; background: var(--red);
+  }
+  .edition-bar {
+    display: flex; justify-content: space-between;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 8px 0;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .edition-bar strong { color: var(--ink); font-weight: 600; }
+
+  .masthead-name {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: clamp(3.4rem, 13vw, 11rem);
+    line-height: 0.88;
+    letter-spacing: -0.035em;
+    color: var(--ink);
+    margin-bottom: 28px;
+  }
+  .masthead-rule {
+    height: 4px; background: var(--ink);
+    position: relative; margin-bottom: 4px;
+  }
+  .masthead-rule::after {
+    content: ''; position: absolute; left: 0; right: 60%;
+    bottom: -7px; height: 2px; background: var(--red);
+  }
+  .masthead-tag {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.2rem, 2.4vw, 1.9rem);
+    color: var(--ink-soft);
+    margin-top: 18px;
+    max-width: 28ch;
+    line-height: 1.3;
+  }
+  .masthead-meta {
+    margin-top: 36px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px 32px;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--mid);
+    border-top: 1px dotted var(--rule);
+    padding-top: 24px;
+  }
+  .masthead-meta div strong {
+    display: block;
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+
+  /* ─── SECTION ─── */
+  section.block {
+    padding: var(--pad-section) var(--pad-x);
+    border-bottom: 4px solid var(--ink);
+    position: relative;
+  }
+  section.block.alt { background: var(--paper-deep); }
+  section.block.dark {
+    background: var(--ink); color: var(--paper);
+    border-bottom-color: var(--red);
+  }
+
+  .section-tag {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    margin-bottom: 28px;
+    font-weight: 500;
+  }
+  section.block.dark .section-tag { background: var(--paper); color: var(--ink); }
+
+  .section-headline {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: clamp(2.2rem, 6vw, 4.8rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+    max-width: 18ch;
+  }
+  .section-deck {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.05rem, 1.8vw, 1.4rem);
+    color: var(--mid);
+    border-top: 1px solid var(--rule);
+    padding-top: 18px;
+    margin-top: 12px;
+    max-width: 50ch;
+  }
+  section.block.dark .section-deck { color: var(--paper-deep); border-top-color: var(--rule); }
+
+  /* ─── ABOUT ─── */
+  .about-body {
+    margin-top: 56px;
+    columns: 2;
+    column-gap: 48px;
+    column-rule: 1px solid var(--rule);
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--ink-soft);
+    max-width: 1100px;
+  }
+  .about-body p + p { margin-top: 1em; }
+  .about-body p:first-child::first-letter {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: 4.5em;
+    float: left;
+    line-height: 0.85;
+    margin: 6px 10px 0 0;
+    color: var(--red);
+  }
+  @media (max-width: 720px) { .about-body { columns: 1; } }
+
+  /* ─── EXPERIENCE ─── */
+  .feature-list { margin-top: 56px; display: grid; gap: 0; }
+  .feature {
+    padding: 40px 0;
+    border-top: 2px solid var(--ink);
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 40px;
+    transition: background .3s var(--ease);
+  }
+  .feature:last-child { border-bottom: 2px solid var(--ink); }
+  .feature:hover { background: rgba(158,42,43,0.04); }
+  .feature-meta {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--red);
+  }
+  .feature-meta div + div { margin-top: 4px; color: var(--mid); }
+  .feature-title {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+    line-height: 1.15;
+    margin-bottom: 4px;
+  }
+  .feature-co {
+    font-family: var(--body);
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--mid);
+    margin-bottom: 16px;
+  }
+  .feature-body { display: grid; gap: 8px; }
+  .feature-body li {
+    list-style: none;
+    padding-left: 20px;
+    position: relative;
+    font-size: 0.98rem;
+    color: var(--ink-soft);
+    line-height: 1.65;
+  }
+  .feature-body li::before {
+    content: '■';
+    position: absolute; left: 0; top: 4px;
+    color: var(--red);
+    font-size: 0.55rem;
+  }
+  @media (max-width: 720px) { .feature { grid-template-columns: 1fr; gap: 12px; padding: 28px 0; } }
+
+  /* ─── CLASSIFIEDS / SKILLS ─── */
+  .classifieds-grid {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 0;
+    border-top: 2px solid var(--ink);
+    border-left: 2px solid var(--ink);
+  }
+  .class-col {
+    padding: 32px 28px;
+    border-right: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    background: var(--paper);
+  }
+  .class-head {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding-bottom: 10px;
+    border-bottom: 3px double var(--ink);
+    margin-bottom: 16px;
+  }
+  .class-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dotted var(--rule);
+    font-size: 0.92rem;
+    transition: padding-left .25s var(--ease), color .25s var(--ease);
+    min-height: 44px;
+  }
+  .class-row:hover { padding-left: 6px; color: var(--red); }
+  .class-row:last-child { border-bottom: none; }
+  .dots { display: flex; gap: 4px; }
+  .dot { width: 7px; height: 7px; background: var(--rule); border-radius: 0; transition: background .25s; }
+  .dot.on { background: var(--ink); }
+  .class-row:hover .dot.on { background: var(--red); }
+
+  .class-list-row {
+    padding: 10px 0;
+    border-bottom: 1px dotted var(--rule);
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    transition: color .25s var(--ease), padding-left .25s var(--ease);
+    min-height: 44px;
+    display: flex; align-items: center;
+  }
+  .class-list-row::before { content: '— '; color: var(--red); margin-right: 6px; }
+  .class-list-row:hover { color: var(--red); padding-left: 6px; }
+  .class-list-row:last-child { border-bottom: none; }
+
+  /* ─── RECOGNITION ─── */
+  .quotes-grid {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 32px;
+  }
+  .quote-card {
+    padding: 36px 32px;
+    background: var(--paper);
+    border: 2px solid var(--paper);
+    border-top: 6px solid var(--red);
+    transition: all .35s var(--ease);
+  }
+  .quote-card:hover {
+    border-color: var(--ink);
+    transform: translateY(-4px);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .quote-card .q-mark {
+    font-family: var(--serif);
+    font-size: 3.5rem;
+    line-height: 0.5;
+    color: var(--red);
+    margin-bottom: 12px;
+  }
+  .quote-card .q-title {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .quote-card .q-source {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  /* ─── EDUCATION ─── */
+  .edu-grid {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 0;
+    border: 2px solid var(--paper);
+    border-top: 2px solid var(--paper);
+  }
+  .edu-row {
+    padding: 32px;
+    border-top: 2px solid var(--paper);
+    background: rgba(244,240,232,0.05);
+    transition: background .3s var(--ease);
+  }
+  .edu-row:hover { background: rgba(244,240,232,0.12); }
+  .edu-degree {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin-bottom: 6px;
+    color: var(--paper);
+  }
+  .edu-school {
+    font-family: var(--body);
+    font-style: italic;
+    color: var(--paper-deep);
+    margin-bottom: 14px;
+  }
+  .edu-year {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--red);
+  }
+
+  /* ─── CONTACT ─── */
+  .contact {
+    background: var(--paper-deep);
+    text-align: left;
+  }
+  .contact-grid {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    background: var(--ink);
+    border: 4px solid var(--ink);
+  }
+  .contact-cell {
+    background: var(--paper);
+    padding: 36px 32px;
+    transition: all .3s var(--ease);
+    display: block;
+    min-height: 120px;
+  }
+  .contact-cell:hover { background: var(--ink); color: var(--paper); }
+  .contact-cell:hover .cc-label { color: var(--red); }
+  .cc-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 12px;
+    transition: color .3s;
+  }
+  .cc-value {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+    line-height: 1.2;
+  }
+  @media (max-width: 600px) { .contact-grid { grid-template-columns: 1fr; } }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--ink);
+    color: var(--paper-deep);
+    padding: 32px var(--pad-x);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  footer span.red { color: var(--red); }
+
+  @media (max-width: 600px) {
+    section.block { padding: 64px 20px; }
+    .hero { padding: 120px 20px 48px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#top" class="nav-mark">J. T. HARRINGTON</a>
+  <div class="nav-links">
+    <a href="#about">The Brief</a>
+    <a href="#work">Work</a>
+    <a href="#tools">Tools</a>
+    <a href="#press">Press</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="edition-bar reveal">
+    <span><strong>VOL. VIII</strong> · OPERATIONS &amp; LOGISTICS</span>
+    <span>CHICAGO EDITION</span>
+    <span><strong>EST. 2016</strong></span>
+  </div>
+  <h1 class="masthead-name reveal d1">James&nbsp;T.<br>Harrington</h1>
+  <div class="masthead-rule reveal d2"></div>
+  <p class="masthead-tag reveal d2">Operations Manager. Team builder. The one people turn to when something actually needs to get done.</p>
+  <div class="masthead-meta reveal d3">
+    <div><strong>Based in</strong>Chicago, Illinois</div>
+    <div><strong>Filing since</strong>2016</div>
+    <div><strong>Currently</strong>Director of Operations · Midland Supply Co.</div>
+    <div><strong>Reach</strong>james.harrington@email.com</div>
+  </div>
+</header>
+
+<!-- ABOUT -->
+<section class="block" id="about">
+  <div class="reveal">
+    <span class="section-tag">The Brief</span>
+    <h2 class="section-headline">Eight years of getting things done — without the jargon, without the drama.</h2>
+    <p class="section-deck">A plain-language look at how I work, who I've worked with, and what's kept the lights on.</p>
+  </div>
+  <div class="about-body reveal d1">
+    <p>I've managed operations for companies ranging from 12-person startups to 400-person regional offices, and the work is always the same: find what's broken, fix it with your team, and make sure it stays fixed.</p>
+    <p>I'm not the loudest person in the room, but I'm usually the one people turn to when something actually needs to get done. That suits me. I'd rather ship a quiet, working system than a loud, broken one.</p>
+    <p>Good processes make good teams. Good teams make everything possible. Most of my job is making sure the second sentence stays true — by handling the first.</p>
+    <p>Outside of work I coach my kid's little league team, fix things around the house on weekends, and keep a slightly-too-detailed spreadsheet of every road trip I've taken since 2014. That last part probably tells you most of what you need to know.</p>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="block alt" id="work">
+  <div class="reveal">
+    <span class="section-tag">Section B · Career</span>
+    <h2 class="section-headline">The work, told plainly.</h2>
+    <p class="section-deck">Two long stops. A handful of teams. The kind of receipts you can show on a Monday.</p>
+  </div>
+  <div class="feature-list">
+    <article class="feature reveal">
+      <div class="feature-meta">
+        <div>2020 — Present</div>
+        <div>Chicago, IL</div>
+      </div>
+      <div>
+        <h3 class="feature-title">Director of Operations</h3>
+        <div class="feature-co">Midland Supply Co.</div>
+        <ul class="feature-body">
+          <li>Oversaw daily operations across 3 regional warehouses, managing a team of 42</li>
+          <li>Reduced fulfillment errors by 31% through standardized pick-pack protocols</li>
+          <li>Negotiated vendor contracts saving $280K annually in supply costs</li>
+          <li>Implemented inventory management system cutting shrinkage by 18%</li>
+        </ul>
+      </div>
+    </article>
+    <article class="feature reveal">
+      <div class="feature-meta">
+        <div>2016 — 2020</div>
+        <div>Milwaukee, WI</div>
+      </div>
+      <div>
+        <h3 class="feature-title">Operations Manager</h3>
+        <div class="feature-co">Clearpath Logistics</div>
+        <ul class="feature-body">
+          <li>Led cross-functional team of 24 to meet aggressive Q4 shipping deadlines</li>
+          <li>Developed onboarding program that cut new-hire ramp time from 6 weeks to 3</li>
+          <li>Managed $1.4M departmental budget with consistent 4–6% underspend</li>
+          <li>Earned "Manager of the Year" in 2018 and 2019</li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- TOOLS / SKILLS -->
+<section class="block" id="tools">
+  <div class="reveal">
+    <span class="section-tag">Classifieds</span>
+    <h2 class="section-headline">What's in the toolbox.</h2>
+    <p class="section-deck">A short, honest list. No invented competencies, no rounded-up scores.</p>
+  </div>
+  <div class="classifieds-grid">
+    <div class="class-col reveal">
+      <div class="class-head">Core Skills</div>
+      <div class="class-row">Operations Mgmt <div class="dots"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div></div></div>
+      <div class="class-row">Process Improvement <div class="dots"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div></div></div>
+      <div class="class-row">Team Leadership <div class="dots"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot"></div></div></div>
+      <div class="class-row">Budget Planning <div class="dots"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot"></div></div></div>
+      <div class="class-row">Stakeholder Comms <div class="dots"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot"></div><div class="dot"></div></div></div>
+    </div>
+    <div class="class-col reveal d1">
+      <div class="class-head">Tools &amp; Platforms</div>
+      <div class="class-list-row">Microsoft Office Suite</div>
+      <div class="class-list-row">Salesforce CRM</div>
+      <div class="class-list-row">Asana &amp; Jira</div>
+      <div class="class-list-row">SAP / Oracle ERP</div>
+      <div class="class-list-row">Google Workspace</div>
+      <div class="class-list-row">Tableau / Power BI</div>
+    </div>
+    <div class="class-col reveal d2">
+      <div class="class-head">How I Work</div>
+      <div class="class-list-row">Reliable</div>
+      <div class="class-list-row">Direct Communicator</div>
+      <div class="class-list-row">Practical Problem Solver</div>
+      <div class="class-list-row">Team-First Mentality</div>
+      <div class="class-list-row">Steady Under Pressure</div>
+      <div class="class-list-row">Continuous Learner</div>
+    </div>
+  </div>
+</section>
+
+<!-- RECOGNITION -->
+<section class="block alt" id="press">
+  <div class="reveal">
+    <span class="section-tag">In the Press</span>
+    <h2 class="section-headline">Some kind notices, for the record.</h2>
+    <p class="section-deck">I don't lead with awards, but they make a fair shorthand for what working together looks like.</p>
+  </div>
+  <div class="quotes-grid">
+    <div class="quote-card reveal">
+      <div class="q-mark">"</div>
+      <div class="q-title">Manager of the Year (2018 &amp; 2019)</div>
+      <div class="q-source">Clearpath Logistics</div>
+    </div>
+    <div class="quote-card reveal d1">
+      <div class="q-mark">"</div>
+      <div class="q-title">Process Innovation Award</div>
+      <div class="q-source">Midland Supply Co. · 2022</div>
+    </div>
+    <div class="quote-card reveal d2">
+      <div class="q-mark">"</div>
+      <div class="q-title">Top 40 Under 40</div>
+      <div class="q-source">Chicago Business Journal · 2023</div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="block dark">
+  <div class="reveal">
+    <span class="section-tag">Education</span>
+    <h2 class="section-headline">Where the basics came from.</h2>
+    <p class="section-deck">A degree, a belt, and a stack of books I've kept on a shelf for fifteen years.</p>
+  </div>
+  <div class="edu-grid">
+    <div class="edu-row reveal">
+      <div class="edu-degree">B.S. Business Administration — Operations</div>
+      <div class="edu-school">University of Wisconsin–Madison</div>
+      <div class="edu-year">Class of 2016</div>
+    </div>
+    <div class="edu-row reveal d1">
+      <div class="edu-degree">Lean Six Sigma Green Belt</div>
+      <div class="edu-school">American Society for Quality</div>
+      <div class="edu-year">Certified 2019</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="block contact" id="contact">
+  <div class="reveal">
+    <span class="section-tag">Get in Touch</span>
+    <h2 class="section-headline">Got something that needs sorting? Drop a line.</h2>
+    <p class="section-deck">Best by email. I read everything. I reply within a day, two at most.</p>
+  </div>
+  <div class="contact-grid reveal d1">
+    <a class="contact-cell" href="mailto:james.harrington@email.com">
+      <div class="cc-label">Email</div>
+      <div class="cc-value">james.harrington@email.com</div>
+    </a>
+    <a class="contact-cell" href="tel:+15552345678">
+      <div class="cc-label">Phone</div>
+      <div class="cc-value">+1 (555) 234-5678</div>
+    </a>
+    <a class="contact-cell" href="#">
+      <div class="cc-label">LinkedIn</div>
+      <div class="cc-value">linkedin.com/in/jharrington</div>
+    </a>
+    <a class="contact-cell" href="#">
+      <div class="cc-label">Location</div>
+      <div class="cc-value">Chicago, Illinois</div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <span>© James T. Harrington · Chicago, IL</span>
+  <span>Set in Playfair &amp; Source Serif · <span class="red">Printed daily</span></span>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Victoria Whitmore — Chief Executive Officer</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cinzel:wght@400;500;600;700;800&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0a1525;
+    --navy-2: #11203a;
+    --navy-3: #182d4d;
+    --gold: #b8973f;
+    --gold-light: #d4b468;
+    --gold-deep: #8a6f1f;
+    --cream: #f8f4ec;
+    --ivory: #fdfaf4;
+    --paper: #f5efe2;
+    --muted: #7a6a52;
+    --ink: #1a1a1a;
+    --rule: rgba(184,151,63,0.35);
+
+    --display: 'Cinzel', Georgia, serif;
+    --serif: 'EB Garamond', Georgia, serif;
+
+    --pad-section: clamp(80px, 11vw, 150px);
+    --pad-x: clamp(20px, 5vw, 96px);
+    --ease: cubic-bezier(.2,.7,.2,1);
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--ivory);
+    font-family: var(--serif);
+    color: var(--navy);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+  .reveal.d1 { transition-delay: .08s; }
+  .reveal.d2 { transition-delay: .16s; }
+  .reveal.d3 { transition-delay: .24s; }
+  .reveal.d4 { transition-delay: .32s; }
+
+  /* gold rule shorthand */
+  .gold-rule {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold) 30%, var(--gold-light) 50%, var(--gold) 70%, transparent);
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: rgba(10,21,37,0);
+    transition: background .4s var(--ease), padding .4s var(--ease);
+    padding: 22px var(--pad-x);
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 100;
+  }
+  nav.scrolled {
+    background: rgba(10,21,37,0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 14px var(--pad-x);
+    border-bottom: 1px solid var(--gold-deep);
+  }
+  .nav-mark {
+    display: flex; align-items: center; gap: 12px;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--cream);
+  }
+  .nav-monogram {
+    width: 36px; height: 36px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 0.78rem;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+  }
+  .nav-links {
+    display: flex; gap: 32px;
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 0.66rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: rgba(248,244,236,0.65);
+  }
+  .nav-links a { padding: 8px 4px; transition: color .25s; position: relative; }
+  .nav-links a::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0;
+    height: 1px; background: var(--gold);
+    transform: scaleX(0); transform-origin: center;
+    transition: transform .35s var(--ease);
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+  @media (max-width: 720px) { .nav-links { display: none; } }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    background: var(--navy);
+    color: var(--cream);
+    padding: 140px var(--pad-x) 80px;
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: 24px; bottom: 24px; left: 24px; right: 24px;
+    border: 1px solid var(--gold-deep);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: ''; position: absolute; top: 32px; bottom: 32px; left: 32px; right: 32px;
+    border: 1px solid rgba(184,151,63,0.15);
+    pointer-events: none;
+  }
+  /* corner ornaments */
+  .corner {
+    position: absolute;
+    width: 60px; height: 60px;
+    border-color: var(--gold);
+    border-style: solid;
+    z-index: 2;
+  }
+  .corner.tl { top: 18px; left: 18px; border-width: 1px 0 0 1px; }
+  .corner.tr { top: 18px; right: 18px; border-width: 1px 1px 0 0; }
+  .corner.bl { bottom: 18px; left: 18px; border-width: 0 0 1px 1px; }
+  .corner.br { bottom: 18px; right: 18px; border-width: 0 1px 1px 0; }
+
+  .hero-eyebrow {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 0.68rem;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+    z-index: 2; position: relative;
+  }
+  .hero-monogram {
+    width: 90px; height: 90px;
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 36px;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: var(--gold);
+    letter-spacing: 0.06em;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-monogram::before, .hero-monogram::after {
+    content: ''; position: absolute;
+    top: 50%; width: 100px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-deep));
+  }
+  .hero-monogram::before { right: 100%; margin-right: 24px; }
+  .hero-monogram::after { left: 100%; margin-left: 24px; background: linear-gradient(90deg, var(--gold-deep), transparent); }
+
+  .hero-name {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(2.4rem, 7vw, 5.8rem);
+    line-height: 1.05;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cream);
+    z-index: 2; position: relative;
+    max-width: 18ch;
+  }
+  .hero-tag {
+    margin-top: 24px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.05rem, 1.7vw, 1.4rem);
+    color: var(--gold-light);
+    letter-spacing: 0.06em;
+    z-index: 2; position: relative;
+  }
+  .hero-rule {
+    margin: 40px auto 36px;
+    max-width: 280px;
+    display: flex; align-items: center; gap: 14px;
+    z-index: 2; position: relative;
+  }
+  .hero-rule .line { flex: 1; height: 1px; background: var(--gold); }
+  .hero-rule .diamond { width: 8px; height: 8px; background: var(--gold); transform: rotate(45deg); }
+
+  .hero-motto {
+    font-family: var(--display);
+    font-weight: 500;
+    font-style: italic;
+    font-size: 0.95rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold);
+    z-index: 2; position: relative;
+  }
+
+  .hero-meta {
+    margin-top: 64px;
+    display: flex; flex-wrap: wrap; gap: 36px; justify-content: center;
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 0.68rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(248,244,236,0.6);
+    z-index: 2; position: relative;
+    border-top: 1px solid var(--gold-deep);
+    border-bottom: 1px solid var(--gold-deep);
+    padding: 18px 0;
+    width: 100%; max-width: 800px;
+  }
+  .hero-meta span { display: flex; align-items: center; gap: 10px; }
+  .hero-meta span::before { content: '◆'; color: var(--gold); font-size: 0.5rem; }
+
+  /* ─── SECTION ─── */
+  section.block {
+    padding: var(--pad-section) var(--pad-x);
+    position: relative;
+  }
+  section.block.dark {
+    background: var(--navy);
+    color: var(--cream);
+  }
+  section.block.paper { background: var(--paper); }
+
+  .section-tag {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 0.7rem;
+    letter-spacing: 0.36em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 24px;
+    display: flex; align-items: center; justify-content: center;
+    gap: 14px;
+  }
+  .section-tag::before, .section-tag::after {
+    content: ''; flex: 0 0 auto; width: 60px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .section-tag::after { background: linear-gradient(90deg, var(--gold), transparent); }
+  section.block.dark .section-tag { color: var(--gold); }
+  section.block.dark .section-tag::before { background: linear-gradient(90deg, transparent, var(--gold-deep)); }
+  section.block.dark .section-tag::after { background: linear-gradient(90deg, var(--gold-deep), transparent); }
+
+  .section-headline {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    line-height: 1.2;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--navy);
+    max-width: 28ch;
+    margin: 0 auto;
+  }
+  section.block.dark .section-headline { color: var(--cream); }
+  .section-headline em {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    text-transform: none;
+    color: var(--gold-deep);
+    letter-spacing: 0;
+  }
+  section.block.dark .section-headline em { color: var(--gold-light); }
+
+  .section-deck {
+    margin: 24px auto 0;
+    max-width: 56ch;
+    text-align: center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.1rem, 1.7vw, 1.35rem);
+    color: var(--muted);
+    line-height: 1.55;
+  }
+  section.block.dark .section-deck { color: rgba(248,244,236,0.7); }
+
+  /* ─── PROFILE ─── */
+  .profile-body {
+    margin-top: 64px;
+    max-width: 880px;
+    margin-left: auto; margin-right: auto;
+  }
+  .profile-body p {
+    font-size: clamp(1.1rem, 1.6vw, 1.3rem);
+    line-height: 1.85;
+    color: var(--navy-2);
+    text-align: justify;
+    text-indent: 2.5em;
+  }
+  .profile-body p + p { margin-top: 1em; }
+  .profile-body p:first-child { text-indent: 0; }
+  .profile-body p:first-child::first-letter {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 4.5em;
+    float: left;
+    line-height: 0.85;
+    margin: 8px 14px 0 0;
+    color: var(--gold-deep);
+  }
+  .profile-body em { font-style: italic; color: var(--gold-deep); }
+
+  .profile-stats {
+    margin-top: 80px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0;
+    border-top: 1px solid var(--gold);
+    border-bottom: 1px solid var(--gold);
+  }
+  .pstat {
+    padding: 32px 24px;
+    text-align: center;
+    border-right: 1px solid var(--rule);
+    transition: background .35s var(--ease);
+  }
+  .pstat:last-child { border-right: none; }
+  .pstat:hover { background: rgba(184,151,63,0.06); }
+  .pstat-num {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1;
+    color: var(--gold-deep);
+    letter-spacing: 0.04em;
+  }
+  .pstat-label {
+    margin-top: 10px;
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 0.7rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ─── RECORD / EXPERIENCE ─── */
+  .record-list { margin-top: 72px; max-width: 1100px; margin-left: auto; margin-right: auto; }
+  .record {
+    padding: 56px 0;
+    border-top: 1px solid var(--gold);
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 56px;
+    transition: padding-left .35s var(--ease);
+  }
+  .record:last-child { border-bottom: 1px solid var(--gold); }
+  .record:hover { padding-left: 16px; }
+
+  .record-tenure {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 0.78rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+  }
+  .record-tenure-roman {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 1.4rem;
+    color: var(--gold);
+    margin-top: 8px;
+    letter-spacing: 0.06em;
+  }
+  .record-title {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+    line-height: 1.15;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--cream);
+    margin-bottom: 6px;
+  }
+  .record-org {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+  .record-list-items { list-style: none; display: grid; gap: 10px; }
+  .record-list-items li {
+    padding-left: 24px;
+    position: relative;
+    font-size: 1rem;
+    color: rgba(248,244,236,0.85);
+    line-height: 1.7;
+  }
+  .record-list-items li::before {
+    content: '◆';
+    position: absolute; left: 0; top: 6px;
+    color: var(--gold);
+    font-size: 0.55rem;
+  }
+  @media (max-width: 720px) { .record { grid-template-columns: 1fr; gap: 14px; padding: 40px 0; } }
+
+  /* ─── COMPETENCIES ─── */
+  .compass-grid {
+    margin-top: 72px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--gold);
+    border-left: 1px solid var(--gold);
+  }
+  @media (max-width: 1180px) { .compass-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 720px)  { .compass-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 440px)  { .compass-grid { grid-template-columns: 1fr; } }
+  .compass-cell {
+    padding: 36px 32px;
+    border-right: 1px solid var(--gold);
+    border-bottom: 1px solid var(--gold);
+    transition: background .35s var(--ease);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+    align-items: center;
+  }
+  .compass-cell:hover { background: rgba(184,151,63,0.06); }
+  .cc-roman {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 1.5rem;
+    color: var(--gold-deep);
+    letter-spacing: 0.04em;
+    width: 60px;
+    text-align: center;
+    border-right: 1px solid var(--rule);
+    padding-right: 20px;
+  }
+  .cc-name {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 0.92rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .cc-level {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+  .cc-level::before { content: '— '; color: var(--gold); }
+
+  /* ─── BOARDS ─── */
+  .boards-list { margin-top: 56px; max-width: 880px; margin-left: auto; margin-right: auto; }
+  .board-row {
+    display: grid;
+    grid-template-columns: 50px 1fr auto;
+    gap: 24px;
+    padding: 24px 0;
+    border-top: 1px solid var(--rule);
+    align-items: center;
+    transition: padding-left .3s var(--ease), color .3s var(--ease);
+  }
+  .board-row:last-child { border-bottom: 1px solid var(--rule); }
+  .board-row:hover { padding-left: 12px; }
+  .br-num {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 1.05rem;
+    color: var(--gold-light);
+    letter-spacing: 0.06em;
+  }
+  .br-name {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cream);
+  }
+  .br-role {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--gold);
+  }
+
+  /* ─── ACADEMIC ─── */
+  .academy-grid {
+    margin-top: 72px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 0;
+    border-left: 1px solid var(--gold);
+    border-top: 1px solid var(--gold);
+  }
+  .academy-cell {
+    padding: 44px 36px;
+    text-align: center;
+    border-right: 1px solid var(--gold);
+    border-bottom: 1px solid var(--gold);
+    transition: background .35s var(--ease);
+  }
+  .academy-cell:hover { background: rgba(184,151,63,0.05); }
+  .ac-monogram {
+    width: 56px; height: 56px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--gold-deep);
+    letter-spacing: 0.06em;
+  }
+  .ac-degree {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .ac-school {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--gold-deep);
+    margin-bottom: 12px;
+  }
+  .ac-year {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 0.7rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ─── CONTACT ─── */
+  .contact { text-align: center; }
+  .contact-headline {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(2.4rem, 6vw, 4.8rem);
+    line-height: 1.15;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--cream);
+    max-width: 22ch;
+    margin: 0 auto;
+  }
+  .contact-headline em {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    text-transform: none;
+    color: var(--gold);
+    letter-spacing: 0;
+  }
+  .contact-deck {
+    margin: 32px auto 0;
+    max-width: 50ch;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+    color: rgba(248,244,236,0.7);
+    line-height: 1.55;
+  }
+  .contact-grid {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0;
+    border-top: 1px solid var(--gold);
+    border-left: 1px solid var(--gold);
+    max-width: 1100px;
+    margin-left: auto; margin-right: auto;
+  }
+  .contact-cell {
+    padding: 32px 24px;
+    border-right: 1px solid var(--gold);
+    border-bottom: 1px solid var(--gold);
+    text-align: left;
+    transition: background .3s var(--ease);
+    min-height: 100px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .contact-cell:hover { background: rgba(184,151,63,0.08); }
+  .cc-label {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 0.62rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .cc-value {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--navy);
+    border-top: 1px solid var(--gold);
+    padding: 32px var(--pad-x);
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+    text-align: center;
+  }
+  footer .motto {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+  }
+  footer .meta {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 0.62rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: rgba(248,244,236,0.4);
+  }
+
+  @media (max-width: 600px) {
+    section.block { padding: 72px 20px; }
+    .hero { padding: 130px 24px 64px; }
+    .corner { width: 36px; height: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#top" class="nav-mark">
+    <span class="nav-monogram">VW</span>
+    <span>Victoria Whitmore</span>
+  </a>
+  <div class="nav-links">
+    <a href="#profile">Profile</a>
+    <a href="#record">Record</a>
+    <a href="#compass">Competencies</a>
+    <a href="#boards">Board Service</a>
+    <a href="#contact">Office</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="corner tl"></div>
+  <div class="corner tr"></div>
+  <div class="corner bl"></div>
+  <div class="corner br"></div>
+
+  <div class="reveal"><div class="hero-eyebrow">Curriculum Vitae · Executive Record</div></div>
+  <div class="hero-monogram reveal d1">VW</div>
+  <h1 class="hero-name reveal d1">Victoria Whitmore</h1>
+  <p class="hero-tag reveal d2">Chief Executive Officer · Board Advisor · Strategic Leader</p>
+
+  <div class="hero-rule reveal d2">
+    <div class="line"></div>
+    <div class="diamond"></div>
+    <div class="line"></div>
+  </div>
+
+  <div class="hero-motto reveal d3">— Auctoritas et Prudentia —</div>
+
+  <div class="hero-meta reveal d4">
+    <span>New York</span>
+    <span>Established 2004</span>
+    <span>By Appointment</span>
+  </div>
+</header>
+
+<!-- PROFILE -->
+<section class="block paper" id="profile">
+  <div class="reveal">
+    <div class="section-tag">I · Executive Profile</div>
+    <h2 class="section-headline">Twenty years building <em>institutions</em> — not merely companies.</h2>
+  </div>
+  <div class="profile-body reveal d1">
+    <p>I have led organizations through transformational growth, navigated global complexity, and consistently created value where others found only risk. My remit has spanned capital allocation, organizational design, and the patient cultivation of long-term institutional advantage.</p>
+    <p>I do not manage from a distance; <em>I lead from the front</em> — with precision, authority, and full accountability for outcomes. The firms I have built are defined less by their growth curves than by the standards that survived the growth.</p>
+    <p>I now divide my time between executive leadership and select board appointments, with a particular interest in financial governance, succession planning, and the durable architecture of well-run institutions.</p>
+  </div>
+  <div class="profile-stats reveal d2">
+    <div class="pstat"><div class="pstat-num">$4.2B</div><div class="pstat-label">AUM</div></div>
+    <div class="pstat"><div class="pstat-num">$820M</div><div class="pstat-label">M&amp;A Closed</div></div>
+    <div class="pstat"><div class="pstat-num">XX</div><div class="pstat-label">Years Leading</div></div>
+    <div class="pstat"><div class="pstat-num">III</div><div class="pstat-label">Board Seats</div></div>
+  </div>
+</section>
+
+<!-- RECORD -->
+<section class="block dark" id="record">
+  <div class="reveal">
+    <div class="section-tag">II · Professional Record</div>
+    <h2 class="section-headline">Two long appointments. <em>One standard.</em></h2>
+  </div>
+  <div class="record-list">
+    <article class="record reveal">
+      <div>
+        <div class="record-tenure">Tenure</div>
+        <div class="record-tenure-roman">2019 — Present</div>
+      </div>
+      <div>
+        <h3 class="record-title">Chief Executive Officer</h3>
+        <div class="record-org">Meridian Capital Group · New York, NY</div>
+        <ul class="record-list-items">
+          <li>Led firm through $4.2B AUM growth and successful expansion into European markets</li>
+          <li>Restructured executive leadership team, reducing decision latency by 35%</li>
+          <li>Negotiated and closed 3 strategic acquisitions totaling $820M in enterprise value</li>
+          <li>Elevated firm to top quartile in 5-year performance benchmarks</li>
+        </ul>
+      </div>
+    </article>
+    <article class="record reveal">
+      <div>
+        <div class="record-tenure">Tenure</div>
+        <div class="record-tenure-roman">2014 — 2019</div>
+      </div>
+      <div>
+        <h3 class="record-title">President &amp; Chief Operating Officer</h3>
+        <div class="record-org">Hallmark Equity Partners · Boston, MA</div>
+        <ul class="record-list-items">
+          <li>Oversaw operations for 40-person firm managing $1.8B in assets under management</li>
+          <li>Built institutional client relationships generating $260M in net new capital</li>
+          <li>Implemented governance framework that became firm standard</li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- COMPETENCIES -->
+<section class="block paper" id="compass">
+  <div class="reveal">
+    <div class="section-tag">III · Core Competencies</div>
+    <h2 class="section-headline">The disciplines I bring to <em>the boardroom</em>.</h2>
+  </div>
+  <div class="compass-grid">
+    <div class="compass-cell reveal">
+      <div class="cc-roman">I.</div>
+      <div><div class="cc-name">Executive Leadership</div><div class="cc-level">Expert</div></div>
+    </div>
+    <div class="compass-cell reveal d1">
+      <div class="cc-roman">II.</div>
+      <div><div class="cc-name">Capital Markets</div><div class="cc-level">Expert</div></div>
+    </div>
+    <div class="compass-cell reveal d2">
+      <div class="cc-roman">III.</div>
+      <div><div class="cc-name">M&amp;A Strategy</div><div class="cc-level">Expert</div></div>
+    </div>
+    <div class="compass-cell reveal">
+      <div class="cc-roman">IV.</div>
+      <div><div class="cc-name">Investor Relations</div><div class="cc-level">Expert</div></div>
+    </div>
+    <div class="compass-cell reveal d1">
+      <div class="cc-roman">V.</div>
+      <div><div class="cc-name">Organizational Design</div><div class="cc-level">Advanced</div></div>
+    </div>
+    <div class="compass-cell reveal d2">
+      <div class="cc-roman">VI.</div>
+      <div><div class="cc-name">Governance &amp; Risk</div><div class="cc-level">Expert</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BOARDS -->
+<section class="block dark" id="boards">
+  <div class="reveal">
+    <div class="section-tag">IV · Board Service</div>
+    <h2 class="section-headline">Where my <em>counsel is kept</em>.</h2>
+  </div>
+  <div class="boards-list">
+    <div class="board-row reveal">
+      <div class="br-num">I.</div>
+      <div class="br-name">Argent Foundation</div>
+      <div class="br-role">Trustee</div>
+    </div>
+    <div class="board-row reveal">
+      <div class="br-num">II.</div>
+      <div class="br-name">National Economic Council</div>
+      <div class="br-role">Advisor</div>
+    </div>
+    <div class="board-row reveal">
+      <div class="br-num">III.</div>
+      <div class="br-name">Greenway Capital</div>
+      <div class="br-role">Independent Director</div>
+    </div>
+  </div>
+</section>
+
+<!-- ACADEMIC -->
+<section class="block paper">
+  <div class="reveal">
+    <div class="section-tag">V · Academic Formation</div>
+    <h2 class="section-headline">Where the <em>discipline</em> began.</h2>
+  </div>
+  <div class="academy-grid">
+    <div class="academy-cell reveal">
+      <div class="ac-monogram">M.B.A.</div>
+      <div class="ac-degree">Master of Business Administration</div>
+      <div class="ac-school">Harvard Business School · Finance</div>
+      <div class="ac-year">Class of 2004 · Baker Scholar</div>
+    </div>
+    <div class="academy-cell reveal d1">
+      <div class="ac-monogram">A.B.</div>
+      <div class="ac-degree">Bachelor of Arts — Economics</div>
+      <div class="ac-school">Princeton University</div>
+      <div class="ac-year">Class of 2001 · Summa Cum Laude</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="block dark contact" id="contact">
+  <div class="reveal">
+    <div class="section-tag">VI · Office of V. Whitmore</div>
+    <h2 class="contact-headline">Correspondence is <em>welcomed</em>, by appointment.</h2>
+    <p class="contact-deck">All inquiries reviewed personally. Response within two business days. Discretion assured.</p>
+  </div>
+  <div class="contact-grid reveal d1">
+    <a class="contact-cell" href="mailto:v.whitmore@strategic.co">
+      <div class="cc-label">◆ Direct</div>
+      <div class="cc-value">v.whitmore@strategic.co</div>
+    </a>
+    <a class="contact-cell" href="tel:+15557890123">
+      <div class="cc-label">◆ Office</div>
+      <div class="cc-value">+1 (555) 789-0123</div>
+    </a>
+    <a class="contact-cell" href="#">
+      <div class="cc-label">◆ Counsel</div>
+      <div class="cc-value">linkedin.com/in/vwhitmore</div>
+    </a>
+    <a class="contact-cell" href="#">
+      <div class="cc-label">◆ Seat</div>
+      <div class="cc-value">New York, New York</div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="motto">— Auctoritas et Prudentia —</div>
+  <div class="meta">© Victoria Whitmore · MMXXVI · New York</div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 30);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

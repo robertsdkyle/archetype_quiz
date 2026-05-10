@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. Adaeze Nwosu — Behavioral Economist &amp; Policy Researcher</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --teal: #0d3d4a;
+    --teal-deep: #082831;
+    --teal-mid: #165a6a;
+    --teal-light: #2a8a9a;
+    --teal-pale: #d0e8ec;
+    --sand: #f4f0e4;
+    --sand-2: #ede7d6;
+    --ivory: #fdfbf6;
+    --amber: #b87c28;
+    --amber-light: #d4a040;
+    --amber-deep: #8a5a18;
+    --ink: #1a2428;
+    --ink-soft: #2c3a40;
+    --muted: #5a6a70;
+    --muted-2: #8a9590;
+    --rule: #c4d8dc;
+
+    --display: 'Spectral', Georgia, serif;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+    --pad-section: clamp(80px, 11vw, 150px);
+    --pad-x: clamp(20px, 5vw, 96px);
+    --ease: cubic-bezier(.2,.7,.2,1);
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--ivory);
+    font-family: var(--display);
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+  .reveal.d1 { transition-delay: .08s; }
+  .reveal.d2 { transition-delay: .16s; }
+  .reveal.d3 { transition-delay: .24s; }
+  .reveal.d4 { transition-delay: .32s; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: rgba(253,251,246,0);
+    transition: background .5s var(--ease), padding .4s var(--ease), border-color .4s;
+    padding: 22px var(--pad-x);
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 100;
+    border-bottom: 1px solid transparent;
+  }
+  nav.scrolled {
+    background: rgba(253,251,246,0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 14px var(--pad-x);
+    border-bottom-color: var(--rule);
+  }
+  .nav-mark {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .nav-mark::before { content: '§'; font-family: var(--display); color: var(--amber); font-size: 1.1rem; }
+  .nav-links {
+    display: flex; gap: 32px;
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .nav-links a { padding: 6px 0; transition: color .25s; position: relative; }
+  .nav-links a::before {
+    content: attr(data-num);
+    color: var(--amber);
+    margin-right: 8px;
+    font-weight: 500;
+  }
+  .nav-links a:hover { color: var(--teal); }
+  @media (max-width: 720px) { .nav-links { display: none; } }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    background: var(--teal);
+    color: var(--sand);
+    padding: 130px var(--pad-x) 80px;
+    position: relative;
+    display: flex; flex-direction: column; justify-content: center;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 5%, var(--amber-light) 30%, var(--teal-light) 50%, var(--amber-light) 70%, transparent 95%);
+    opacity: 0.5;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 0.7rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--teal-light);
+    margin-bottom: 32px;
+    display: flex; align-items: center; gap: 16px;
+    position: relative; z-index: 2;
+  }
+  .hero-eyebrow::before { content: ''; width: 36px; height: 1px; background: var(--amber); }
+
+  .hero-name {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: clamp(3.2rem, 10vw, 9rem);
+    line-height: 1;
+    letter-spacing: -0.005em;
+    color: var(--sand);
+    position: relative; z-index: 2;
+  }
+  .hero-name em { font-style: italic; font-weight: 300; color: var(--amber-light); }
+  .hero-name .pre {
+    display: block;
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 1rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--teal-light);
+    margin-bottom: 18px;
+  }
+
+  .hero-tag {
+    margin-top: 36px;
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: clamp(0.85rem, 1.4vw, 1.05rem);
+    color: var(--teal-pale);
+    letter-spacing: 0.04em;
+    line-height: 1.7;
+    max-width: 60ch;
+    position: relative; z-index: 2;
+  }
+  .hero-tag span::after { content: '  ·  '; color: var(--amber); }
+  .hero-tag span:last-child::after { content: ''; }
+
+  .hero-thresh {
+    margin-top: 44px;
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(1.2rem, 2vw, 1.65rem);
+    color: var(--sand);
+    max-width: 50ch;
+    line-height: 1.5;
+    border-left: 2px solid var(--amber);
+    padding: 8px 0 8px 22px;
+    position: relative; z-index: 2;
+  }
+  .hero-thresh em { color: var(--amber-light); }
+
+  .hero-meta {
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0;
+    border-top: 1px solid rgba(212,224,230,0.2);
+    border-bottom: 1px solid rgba(212,224,230,0.2);
+    position: relative; z-index: 2;
+  }
+  .hero-meta div {
+    padding: 24px 24px 24px 0;
+    border-right: 1px solid rgba(212,224,230,0.15);
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--teal-pale);
+  }
+  .hero-meta div:last-child { border-right: none; }
+  .hero-meta div b {
+    display: block;
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 0.6rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--amber-light);
+    margin-bottom: 6px;
+  }
+
+  /* ─── SECTION ─── */
+  section.block {
+    padding: var(--pad-section) var(--pad-x);
+    position: relative;
+  }
+  section.block.sand { background: var(--sand); }
+  section.block.deep {
+    background: var(--teal-deep);
+    color: var(--sand);
+  }
+
+  .section-tag {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 0.7rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--teal-light);
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .section-tag::before {
+    content: '§ ' attr(data-num);
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: var(--amber);
+    letter-spacing: 0.06em;
+  }
+  .section-tag::after {
+    content: ''; flex: 1; max-width: 200px; height: 1px;
+    background: linear-gradient(90deg, var(--rule), transparent);
+  }
+  section.block.deep .section-tag::after { background: linear-gradient(90deg, rgba(212,224,230,0.3), transparent); }
+
+  .section-headline {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: clamp(2.2rem, 5.5vw, 4.4rem);
+    line-height: 1.15;
+    letter-spacing: -0.005em;
+    color: var(--teal);
+    max-width: 28ch;
+  }
+  .section-headline em { font-style: italic; color: var(--amber); }
+  section.block.deep .section-headline { color: var(--sand); }
+  section.block.deep .section-headline em { color: var(--amber-light); }
+
+  /* ─── METRICS BAR ─── */
+  .metrics-bar {
+    background: var(--teal-mid);
+    color: var(--sand);
+    padding: 28px var(--pad-x);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 4px;
+    border-bottom: 1px solid var(--teal-deep);
+  }
+  .metric {
+    padding: 8px 16px;
+    border-right: 1px solid rgba(212,224,230,0.15);
+    transition: background .3s var(--ease);
+  }
+  .metric:last-child { border-right: none; }
+  .metric:hover { background: rgba(255,255,255,0.04); }
+  .metric .key {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 0.62rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--amber-light);
+    margin-bottom: 4px;
+  }
+  .metric .val {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: var(--sand);
+    letter-spacing: 0.02em;
+  }
+
+  /* ─── STATEMENT ─── */
+  .statement-grid {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .statement-prose p {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+    line-height: 1.8;
+    color: var(--ink-soft);
+    text-align: justify;
+  }
+  .statement-prose p + p { margin-top: 1em; }
+  .statement-prose em { font-style: italic; color: var(--amber); font-weight: 400; }
+  .statement-prose p:first-child::first-letter {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: 4.5em;
+    float: left;
+    line-height: 0.85;
+    margin: 8px 14px 0 0;
+    color: var(--teal);
+  }
+
+  .statement-card {
+    background: var(--ivory);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--amber);
+    padding: 36px 32px;
+  }
+  .sc-meta {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 0.62rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 6px;
+  }
+  .sc-title {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.2rem;
+    color: var(--teal);
+    margin-bottom: 22px;
+    line-height: 1.3;
+  }
+  .sc-line {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 16px;
+    padding: 14px 0;
+    border-top: 1px dotted var(--rule);
+    align-items: baseline;
+  }
+  .sc-line:last-child { border-bottom: 1px dotted var(--rule); }
+  .sc-key {
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .sc-val {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 1.05rem;
+    color: var(--teal);
+  }
+  @media (max-width: 820px) { .statement-grid { grid-template-columns: 1fr; gap: 32px; } }
+
+  /* ─── POSITIONS / EXPERIENCE ─── */
+  .positions { margin-top: 56px; max-width: 1100px; }
+  .position {
+    border-top: 1px solid var(--rule);
+    padding: 56px 0;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    transition: padding-left .35s var(--ease);
+  }
+  .position:last-child { border-bottom: 1px solid var(--rule); }
+  .position:hover { padding-left: 16px; }
+  .position-meta { font-family: var(--mono); }
+  .position-num {
+    font-family: var(--display);
+    font-weight: 400;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--amber);
+    letter-spacing: 0.18em;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .position-tenure {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: var(--teal);
+    letter-spacing: 0.04em;
+  }
+  .position-loc {
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+    margin-top: 6px;
+  }
+  .position-title {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+    line-height: 1.25;
+    color: var(--teal);
+    margin-bottom: 4px;
+    letter-spacing: -0.005em;
+  }
+  .position-title em { font-style: italic; color: var(--amber); font-weight: 500; }
+  .position-org {
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+  }
+  .position-list { list-style: none; display: grid; gap: 10px; max-width: 80ch; }
+  .position-list li {
+    padding-left: 22px;
+    position: relative;
+    font-size: 1rem;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    font-weight: 400;
+  }
+  .position-list li::before {
+    content: '—';
+    position: absolute; left: 0; top: 0;
+    color: var(--amber);
+    font-weight: 500;
+  }
+  .pub-cite {
+    margin-top: 22px;
+    background: var(--ivory);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--amber);
+    padding: 16px 22px;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .pub-cite b {
+    display: block;
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 0.62rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 6px;
+  }
+  .pub-cite cite {
+    font-style: normal;
+    color: var(--teal);
+    font-weight: 500;
+  }
+  @media (max-width: 720px) { .position { grid-template-columns: 1fr; gap: 14px; padding: 40px 0; } }
+
+  /* ─── METHODS / SKILLS ─── */
+  .methods-grid {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    border-left: 1px solid var(--rule);
+  }
+  @media (max-width: 1180px) { .methods-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 720px)  { .methods-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 440px)  { .methods-grid { grid-template-columns: 1fr; } }
+  .method-cell {
+    padding: 32px 28px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    transition: background .3s var(--ease);
+  }
+  .method-cell:hover { background: rgba(13,61,74,0.03); }
+  .mc-num {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 0.65rem;
+    letter-spacing: 0.24em;
+    color: var(--amber);
+    margin-bottom: 12px;
+  }
+  .mc-name {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 1.25rem;
+    color: var(--teal);
+    margin-bottom: 16px;
+    letter-spacing: -0.005em;
+  }
+  .mc-name em { font-style: italic; color: var(--amber); }
+  .mc-track {
+    height: 1px;
+    background: var(--rule);
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .mc-fill {
+    position: absolute; top: -1px; left: 0; height: 3px;
+    background: linear-gradient(90deg, var(--teal-mid), var(--teal-light), var(--amber));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 1.4s var(--ease);
+  }
+  .reveal.in .mc-fill { transform: scaleX(var(--p, 0.9)); }
+  .mc-level {
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ─── DOMAINS ─── */
+  .domains-list { margin-top: 56px; max-width: 920px; }
+  .domain {
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    gap: 24px;
+    align-items: center;
+    padding: 22px 0;
+    border-top: 1px solid var(--rule);
+    transition: padding-left .3s var(--ease);
+  }
+  .domain:last-child { border-bottom: 1px solid var(--rule); }
+  .domain:hover { padding-left: 14px; }
+  .d-num {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    color: var(--amber);
+  }
+  .d-name {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(1.15rem, 2vw, 1.5rem);
+    color: var(--teal);
+  }
+  .d-meta {
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ─── PUBLICATIONS ─── */
+  .pubs-list { margin-top: 56px; max-width: 1000px; }
+  .pub {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 32px;
+    padding: 28px 0;
+    border-top: 1px solid rgba(212,224,230,0.15);
+    align-items: start;
+    transition: padding-left .3s var(--ease);
+  }
+  .pub:last-child { border-bottom: 1px solid rgba(212,224,230,0.15); }
+  .pub:hover { padding-left: 14px; }
+  .pub-num {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    color: var(--amber-light);
+  }
+  .pub-title {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.1rem, 1.9vw, 1.4rem);
+    color: var(--sand);
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+  .pub-source {
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    color: var(--teal-light);
+  }
+  .pub-source span { color: var(--amber-light); }
+  .pub-year {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: var(--amber-light);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  @media (max-width: 600px) { .pub { grid-template-columns: 60px 1fr; } .pub-year { grid-column: 2; } }
+
+  /* ─── FORMATION ─── */
+  .formation-grid {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    border-left: 1px solid var(--rule);
+  }
+  .form-cell {
+    padding: 36px 32px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    background: var(--ivory);
+    transition: background .35s var(--ease);
+  }
+  .form-cell:hover { background: var(--sand-2); }
+  .fc-stamp {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--amber);
+    border: 1px solid var(--amber);
+    padding: 4px 10px;
+    display: inline-block;
+    margin-bottom: 18px;
+  }
+  .fc-degree {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 1.3rem;
+    color: var(--teal);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .fc-school {
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 0.85rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    margin-bottom: 14px;
+  }
+  .fc-honor {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.95rem;
+    color: var(--amber);
+    border-top: 1px dotted var(--rule);
+    padding-top: 12px;
+  }
+
+  /* ─── CONTACT ─── */
+  .contact-headline {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: clamp(2.4rem, 6vw, 4.8rem);
+    line-height: 1.1;
+    color: var(--sand);
+    max-width: 22ch;
+  }
+  .contact-headline em { font-style: italic; color: var(--amber-light); }
+  .contact-deck {
+    margin-top: 32px;
+    max-width: 56ch;
+    font-family: var(--display);
+    font-style: italic;
+    font-size: clamp(1.1rem, 1.7vw, 1.35rem);
+    color: var(--teal-pale);
+    line-height: 1.55;
+  }
+  .contact-grid {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0;
+    border-top: 1px solid rgba(212,224,230,0.18);
+    border-left: 1px solid rgba(212,224,230,0.18);
+    max-width: 1100px;
+  }
+  .contact-cell {
+    padding: 32px 24px;
+    border-right: 1px solid rgba(212,224,230,0.18);
+    border-bottom: 1px solid rgba(212,224,230,0.18);
+    transition: background .3s var(--ease);
+    min-height: 110px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .contact-cell:hover { background: rgba(212,224,230,0.05); }
+  .cc-label {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 0.62rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--amber-light);
+    margin-bottom: 10px;
+  }
+  .cc-value {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: 1rem;
+    color: var(--sand);
+    letter-spacing: 0.01em;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--teal);
+    border-top: 1px solid var(--teal-deep);
+    padding: 32px var(--pad-x);
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    text-align: center;
+  }
+  footer .motto {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--amber-light);
+    letter-spacing: 0.06em;
+  }
+  footer .meta {
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 0.65rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(212,224,230,0.4);
+  }
+
+  @media (max-width: 600px) {
+    section.block { padding: 80px 20px; }
+    .hero { padding: 130px 20px 64px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#top" class="nav-mark">A. NWOSU · CV</a>
+  <div class="nav-links">
+    <a href="#statement" data-num="§1">Statement</a>
+    <a href="#positions" data-num="§2">Positions</a>
+    <a href="#methods" data-num="§3">Methods</a>
+    <a href="#publications" data-num="§4">Publications</a>
+    <a href="#contact" data-num="§5">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="reveal"><div class="hero-eyebrow">Curriculum Vitae · Research &amp; Strategy · v. 2026.1</div></div>
+  <h1 class="hero-name reveal d1">
+    <span class="pre">Dr. Adaeze</span>
+    <em>Nwosu</em>.
+  </h1>
+  <div class="hero-tag reveal d2">
+    <span>Behavioral Economist</span>
+    <span>Policy Researcher</span>
+    <span>Senior Fellow · Georgetown University</span>
+  </div>
+  <p class="hero-thresh reveal d3">Knowledge only matters when it reaches the people who can act on it. Fifteen years of <em>asking better questions</em>.</p>
+  <div class="hero-meta reveal d4">
+    <div><b>Based</b>Washington, D.C.</div>
+    <div><b>Affiliation</b>Georgetown · McCourt</div>
+    <div><b>Languages</b>EN · FR · Igbo</div>
+    <div><b>Reach</b>adaeze.nwosu@geo.edu</div>
+  </div>
+</header>
+
+<!-- METRICS BAR -->
+<div class="metrics-bar">
+  <div class="metric"><div class="key">— H-Index</div><div class="val">14</div></div>
+  <div class="metric"><div class="key">— Publications</div><div class="val">38</div></div>
+  <div class="metric"><div class="key">— Citations</div><div class="val">2,400+</div></div>
+  <div class="metric"><div class="key">— Grants</div><div class="val">$4.8M</div></div>
+  <div class="metric"><div class="key">— Federal Advisory</div><div class="val">3 Agencies</div></div>
+</div>
+
+<!-- STATEMENT -->
+<section class="block sand" id="statement">
+  <div class="reveal">
+    <div class="section-tag" data-num="01">Statement</div>
+    <h2 class="section-headline">The work sits at the meeting of <em>rigorous research and real-world policy</em>.</h2>
+  </div>
+  <div class="statement-grid">
+    <div class="statement-prose reveal d1">
+      <p>I translate the complexity of human behavior into insights that governments, organizations, and communities can actually use. The methods are quantitative and patient; the questions are <em>almost always about agency</em> — how people make decisions when constraints, information, and history are stacked against them.</p>
+      <p>Most of my career has lived between two rooms: a research lab where the work begins, and a policy room where it has to survive contact with the world. The interesting projects are the ones that do both — academically defensible, operationally useful.</p>
+      <p>I take on a small number of advisory engagements alongside academic appointments, with a particular interest in evidence-based policy design and the institutions responsible for implementing it.</p>
+    </div>
+    <div class="statement-card reveal d2">
+      <div class="sc-meta">— § Current Engagement</div>
+      <div class="sc-title">Senior Research Fellow, Economic Policy</div>
+      <div class="sc-line"><div class="sc-key">Institution</div><div class="sc-val">Georgetown · McCourt</div></div>
+      <div class="sc-line"><div class="sc-key">Lab Size</div><div class="sc-val">9 researchers</div></div>
+      <div class="sc-line"><div class="sc-key">Funding</div><div class="sc-val">NIH multi-year</div></div>
+      <div class="sc-line"><div class="sc-key">Advisory</div><div class="sc-val">3 federal agencies</div></div>
+      <div class="sc-line"><div class="sc-key">Teaching</div><div class="sc-val">Doctoral seminar</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- POSITIONS -->
+<section class="block" id="positions">
+  <div class="reveal">
+    <div class="section-tag" data-num="02">Positions Held</div>
+    <h2 class="section-headline">Two long appointments. <em>Many open questions.</em></h2>
+  </div>
+  <div class="positions">
+    <article class="position reveal">
+      <div class="position-meta">
+        <div class="position-num">— Appointment I.</div>
+        <div class="position-tenure">2020 — Present</div>
+        <div class="position-loc">Washington, D.C.</div>
+      </div>
+      <div>
+        <h3 class="position-title">Senior Research Fellow — <em>Economic Policy</em></h3>
+        <div class="position-org">Georgetown University · McCourt School of Public Policy</div>
+        <ul class="position-list">
+          <li>Leads interdisciplinary research lab of 9 across economics, psychology, and data science</li>
+          <li>Directed multi-year NIH-funded study on decision-making in resource-constrained households</li>
+          <li>Advises 3 federal agencies on behavioral nudge policy design and evaluation</li>
+          <li>Teaches doctoral seminar in Applied Behavioral Economics (avg. evaluation: 4.9 / 5.0)</li>
+        </ul>
+        <div class="pub-cite">
+          <b>Selected Publication</b>
+          <cite>"Inertia, Agency, and the Poverty Trap"</cite> · American Economic Review · 2023 · 410+ citations
+        </div>
+      </div>
+    </article>
+    <article class="position reveal">
+      <div class="position-meta">
+        <div class="position-num">— Appointment II.</div>
+        <div class="position-tenure">2015 — 2020</div>
+        <div class="position-loc">Washington, D.C.</div>
+      </div>
+      <div>
+        <h3 class="position-title">Research <em>Director</em></h3>
+        <div class="position-org">Brookings Institution</div>
+        <ul class="position-list">
+          <li>Managed portfolio of 14 active research projects with $4.8M in combined grant funding</li>
+          <li>Led policy brief series cited in 6 Congressional hearings on social welfare reform</li>
+          <li>Co-authored 2 books on behavioral policy implementation in OECD countries</li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- METHODS -->
+<section class="block sand" id="methods">
+  <div class="reveal">
+    <div class="section-tag" data-num="03">Methods &amp; Domains</div>
+    <h2 class="section-headline">The instruments kept <em>at the workbench</em>.</h2>
+  </div>
+  <div class="methods-grid">
+    <div class="method-cell reveal" style="--p:0.96;">
+      <div class="mc-num">— Method · 01</div>
+      <div class="mc-name">Policy <em>Analysis</em></div>
+      <div class="mc-track"><div class="mc-fill"></div></div>
+      <div class="mc-level">Expert</div>
+    </div>
+    <div class="method-cell reveal d1" style="--p:0.95;">
+      <div class="mc-num">— Method · 02</div>
+      <div class="mc-name">Econometrics</div>
+      <div class="mc-track"><div class="mc-fill"></div></div>
+      <div class="mc-level">Expert</div>
+    </div>
+    <div class="method-cell reveal d2" style="--p:0.92;">
+      <div class="mc-num">— Method · 03</div>
+      <div class="mc-name">Behavioral <em>Design</em></div>
+      <div class="mc-track"><div class="mc-fill"></div></div>
+      <div class="mc-level">Expert</div>
+    </div>
+    <div class="method-cell reveal" style="--p:0.9;">
+      <div class="mc-num">— Method · 04</div>
+      <div class="mc-name">Field Experiments</div>
+      <div class="mc-track"><div class="mc-fill"></div></div>
+      <div class="mc-level">Expert</div>
+    </div>
+    <div class="method-cell reveal d1" style="--p:0.85;">
+      <div class="mc-num">— Method · 05</div>
+      <div class="mc-name">R · Stata · Python</div>
+      <div class="mc-track"><div class="mc-fill"></div></div>
+      <div class="mc-level">Advanced</div>
+    </div>
+    <div class="method-cell reveal d2" style="--p:0.88;">
+      <div class="mc-num">— Method · 06</div>
+      <div class="mc-name">Mixed <em>Methods</em></div>
+      <div class="mc-track"><div class="mc-fill"></div></div>
+      <div class="mc-level">Advanced</div>
+    </div>
+  </div>
+
+  <div class="reveal" style="margin-top: 100px;">
+    <div class="section-tag" data-num="04">Domains of Inquiry</div>
+    <h2 class="section-headline">The questions I keep <em>returning to</em>.</h2>
+  </div>
+  <div class="domains-list">
+    <div class="domain reveal"><div class="d-num">i.</div><div class="d-name">Behavioral Economics</div><div class="d-meta">Core Discipline</div></div>
+    <div class="domain reveal"><div class="d-num">ii.</div><div class="d-name">Public Policy Design</div><div class="d-meta">Active Research</div></div>
+    <div class="domain reveal"><div class="d-num">iii.</div><div class="d-name">Health &amp; Wellbeing</div><div class="d-meta">Active Research</div></div>
+    <div class="domain reveal"><div class="d-num">iv.</div><div class="d-name">Education Systems</div><div class="d-meta">Field Studies</div></div>
+    <div class="domain reveal"><div class="d-num">v.</div><div class="d-name">Climate Decision-Making</div><div class="d-meta">Emerging</div></div>
+    <div class="domain reveal"><div class="d-num">vi.</div><div class="d-name">Development Economics</div><div class="d-meta">West Africa</div></div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section class="block deep" id="publications">
+  <div class="reveal">
+    <div class="section-tag" data-num="05">Selected Works</div>
+    <h2 class="section-headline">A short bibliography, by way of <em>introduction</em>.</h2>
+  </div>
+  <div class="pubs-list">
+    <a class="pub reveal" href="#">
+      <div class="pub-num">— 01</div>
+      <div>
+        <div class="pub-title">"Inertia, Agency, and the Poverty Trap"</div>
+        <div class="pub-source">American Economic Review · <span>410+ citations</span></div>
+      </div>
+      <div class="pub-year">2023</div>
+    </a>
+    <a class="pub reveal" href="#">
+      <div class="pub-num">— 02</div>
+      <div>
+        <div class="pub-title">"Nudging at Scale: Evidence from West Africa"</div>
+        <div class="pub-source">Journal of Development Economics · <span>240+ citations</span></div>
+      </div>
+      <div class="pub-year">2021</div>
+    </a>
+    <a class="pub reveal" href="#">
+      <div class="pub-num">— 03</div>
+      <div>
+        <div class="pub-title">"When Information Fails"</div>
+        <div class="pub-source">MIT Press · <span>Monograph</span></div>
+      </div>
+      <div class="pub-year">2020</div>
+    </a>
+    <a class="pub reveal" href="#">
+      <div class="pub-num">— 04</div>
+      <div>
+        <div class="pub-title">"Behavioral Policy in OECD Member States"</div>
+        <div class="pub-source">Brookings Press · <span>Co-authored monograph</span></div>
+      </div>
+      <div class="pub-year">2019</div>
+    </a>
+  </div>
+</section>
+
+<!-- FORMATION -->
+<section class="block sand">
+  <div class="reveal">
+    <div class="section-tag" data-num="06">Formation</div>
+    <h2 class="section-headline">Where the <em>training</em> was earned.</h2>
+  </div>
+  <div class="formation-grid">
+    <div class="form-cell reveal">
+      <div class="fc-stamp">— Ph.D.</div>
+      <div class="fc-degree">Doctor of Philosophy — Economics</div>
+      <div class="fc-school">Massachusetts Institute of Technology · Cambridge</div>
+      <div class="fc-honor">Conferred 2014 · Dissertation Prize</div>
+    </div>
+    <div class="form-cell reveal d1">
+      <div class="fc-stamp">— M.Phil.</div>
+      <div class="fc-degree">Master of Philosophy — Development Studies</div>
+      <div class="fc-school">University of Oxford · United Kingdom</div>
+      <div class="fc-honor">Conferred 2010 · Rhodes Scholar</div>
+    </div>
+    <div class="form-cell reveal d2">
+      <div class="fc-stamp">— B.Sc.</div>
+      <div class="fc-degree">Bachelor of Science — Economics &amp; Statistics</div>
+      <div class="fc-school">University of Lagos · Nigeria</div>
+      <div class="fc-honor">Conferred 2008 · First Class Honours</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="block deep" id="contact">
+  <div class="reveal">
+    <div class="section-tag" data-num="07">Correspondence</div>
+    <h2 class="contact-headline">For research, <em>advisory</em>, or quiet questions.</h2>
+    <p class="contact-deck">Open to collaborative research projects, advisory engagements, doctoral committees, and select press inquiries. All correspondence read personally.</p>
+  </div>
+  <div class="contact-grid reveal d1">
+    <a class="contact-cell" href="mailto:adaeze.nwosu@geo.edu">
+      <div class="cc-label">— § Email</div>
+      <div class="cc-value">adaeze.nwosu@geo.edu</div>
+    </a>
+    <a class="contact-cell" href="tel:+15552345678">
+      <div class="cc-label">— § Office</div>
+      <div class="cc-value">+1 (555) 234-5678</div>
+    </a>
+    <a class="contact-cell" href="#">
+      <div class="cc-label">— § Research</div>
+      <div class="cc-value">nwosu-research.org</div>
+    </a>
+    <a class="contact-cell" href="#">
+      <div class="cc-label">— § Seat</div>
+      <div class="cc-value">Washington, D.C.</div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="motto">— Sapientia et Veritas —</div>
+  <div class="meta">© Dr. Adaeze Nwosu · MMXXVI · Washington, D.C.</div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 30);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
