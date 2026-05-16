@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Isabelle Morin — Luxury Brand Director</title>
+<title>Isabelle Morin · Luxury Brand Director</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Upright:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Tenor+Sans&display=swap');
 
@@ -77,7 +77,7 @@
     color: var(--burgundy);
     letter-spacing: 0.04em;
   }
-  .nav-mark::before { content: '— '; color: var(--mauve); }
+  .nav-mark::before { content: '✿ '; color: var(--mauve); }
   .nav-links {
     display: flex; gap: 32px;
     font-family: var(--sans);
@@ -426,6 +426,8 @@
     border-right: 1px solid var(--petal);
     border-bottom: 1px solid var(--petal);
     transition: background .35s var(--ease);
+    display: flex;
+    flex-direction: column;
   }
   .savoir-cell:hover { background: rgba(232,200,184,0.18); }
   .sc-roman {
@@ -449,6 +451,7 @@
     height: 2px;
     background: var(--petal-pale);
     overflow: hidden;
+    margin-top: auto;
     margin-bottom: 10px;
   }
   .sc-fill {
@@ -510,23 +513,23 @@
     font-family: var(--display);
     font-style: italic;
     font-size: 1.2rem;
-    color: var(--mauve);
+    color: var(--petal-pale);
     letter-spacing: 0.04em;
   }
   .acc-title {
     font-family: var(--display);
     font-weight: 300;
     font-size: clamp(1.3rem, 2.4vw, 1.8rem);
-    color: var(--burgundy-deep);
+    color: var(--rose);
     line-height: 1.2;
   }
-  .acc-title em { font-style: italic; color: var(--mauve); }
+  .acc-title em { font-style: italic; color: var(--petal); }
   .acc-source {
     font-family: var(--sans);
     font-size: 0.78rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--mauve);
+    color: var(--petal);
   }
   @media (max-width: 600px) { .acc { grid-template-columns: 36px 1fr; } .acc-source { grid-column: 2; } }
 
@@ -708,7 +711,7 @@
     <div class="glyph">✿</div>
   </div>
 
-  <p class="hero-thresh reveal d3">The finest brands don't sell products — they create <b>desire</b>. Eleven years shaping how luxury houses make people feel.</p>
+  <p class="hero-thresh reveal d3">The finest brands don't sell products. They create <b>desire</b>. Eleven years shaping how luxury houses make people feel.</p>
 
   <div class="hero-meta reveal d4">
     <div><b>Atelier</b>Paris · New York</div>
@@ -728,17 +731,17 @@
 <!-- ESSENCE -->
 <section class="block rose" id="essence">
   <div class="reveal">
-    <div class="section-tag">— I — Essence</div>
+    <div class="section-tag">· I · Essence</div>
     <h2 class="section-headline">Every campaign should linger like a <em>fragrance</em>.</h2>
   </div>
   <div class="essence-grid">
     <div class="essence-prose reveal d1">
-      <p>I work at the intersection of sensory design, emotional storytelling, and cultural intuition — building brands that don't simply sell, but <em>seduce</em> attention into something nearer to devotion.</p>
-      <p>My career has moved between Paris and New York, between fashion and fragrance, between the runway and the storefront. The constant has been a single instinct: the most enduring luxury is always personal — a brand made to feel as if it were waiting for you.</p>
+      <p>I work at the intersection of sensory design, emotional storytelling, and cultural intuition, building brands that don't simply sell, but <em>seduce</em> attention into something nearer to devotion.</p>
+      <p>My career has moved between Paris and New York, between fashion and fragrance, between the runway and the storefront. The constant has been a single instinct: the most enduring luxury is always personal, a brand made to feel as if it were waiting for you.</p>
       <p>I take on a small number of houses each year, alongside selective consulting and editorial direction.</p>
     </div>
     <div class="notes-card reveal d2">
-      <div class="nc-eyebrow">— A Brand's Notes —</div>
+      <div class="nc-eyebrow">✿ A Brand's Notes ✿</div>
       <div class="nc-title">The Composition of My Work</div>
       <div class="nc-line"><div class="nc-key">Top</div><div class="nc-val">Cultural intuition</div></div>
       <div class="nc-line"><div class="nc-key">Heart</div><div class="nc-val">Sensory storytelling</div></div>
@@ -751,14 +754,14 @@
 <!-- MAISONS / EXPERIENCE -->
 <section class="block deep" id="maisons">
   <div class="reveal">
-    <div class="section-tag">— II — Les Maisons</div>
+    <div class="section-tag">· II · Les Maisons</div>
     <h2 class="section-headline">Two houses. <em>Eleven years.</em> An education in desire.</h2>
   </div>
   <div class="maisons">
     <article class="maison reveal">
       <div class="maison-meta">
         <div class="maison-period">Maison I</div>
-        <div class="maison-era">2020 — Présent</div>
+        <div class="maison-era">2020 to Présent</div>
         <div class="maison-loc">Paris · New York</div>
       </div>
       <div>
@@ -775,7 +778,7 @@
     <article class="maison reveal">
       <div class="maison-meta">
         <div class="maison-period">Maison II</div>
-        <div class="maison-era">2016 — 2020</div>
+        <div class="maison-era">2016 to 2020</div>
         <div class="maison-loc">Paris, France</div>
       </div>
       <div>
@@ -794,42 +797,42 @@
 <!-- SAVOIR-FAIRE -->
 <section class="block rose" id="savoir">
   <div class="reveal">
-    <div class="section-tag">— III — Savoir-Faire</div>
+    <div class="section-tag">· III · Savoir-Faire</div>
     <h2 class="section-headline">The disciplines I bring to <em>each maison</em>.</h2>
   </div>
   <div class="savoir-grid">
     <div class="savoir-cell reveal" style="--p:0.95;">
-      <div class="sc-roman">— I.</div>
+      <div class="sc-roman">· I.</div>
       <div class="sc-name">Luxury Brand Strategy</div>
       <div class="sc-track"><div class="sc-fill"></div></div>
       <div class="sc-pct">95</div>
     </div>
     <div class="savoir-cell reveal d1" style="--p:0.92;">
-      <div class="sc-roman">— II.</div>
+      <div class="sc-roman">· II.</div>
       <div class="sc-name">Experiential Marketing</div>
       <div class="sc-track"><div class="sc-fill"></div></div>
       <div class="sc-pct">92</div>
     </div>
     <div class="savoir-cell reveal d2" style="--p:0.9;">
-      <div class="sc-roman">— III.</div>
+      <div class="sc-roman">· III.</div>
       <div class="sc-name">Creative Direction</div>
       <div class="sc-track"><div class="sc-fill"></div></div>
       <div class="sc-pct">90</div>
     </div>
     <div class="savoir-cell reveal" style="--p:0.85;">
-      <div class="sc-roman">— IV.</div>
+      <div class="sc-roman">· IV.</div>
       <div class="sc-name">Global Campaigns</div>
       <div class="sc-track"><div class="sc-fill"></div></div>
       <div class="sc-pct">85</div>
     </div>
     <div class="savoir-cell reveal d1" style="--p:0.98;">
-      <div class="sc-roman">— V.</div>
+      <div class="sc-roman">· V.</div>
       <div class="sc-name">Copywriting · FR / EN</div>
       <div class="sc-track"><div class="sc-fill"></div></div>
       <div class="sc-pct">98</div>
     </div>
     <div class="savoir-cell reveal d2" style="--p:0.88;">
-      <div class="sc-roman">— VI.</div>
+      <div class="sc-roman">· VI.</div>
       <div class="sc-name">Editorial &amp; Press</div>
       <div class="sc-track"><div class="sc-fill"></div></div>
       <div class="sc-pct">88</div>
@@ -837,7 +840,7 @@
   </div>
 
   <div class="reveal" style="margin-top: 100px;">
-    <div class="section-tag">— IV — Catégories</div>
+    <div class="section-tag">· IV · Catégories</div>
     <h2 class="section-headline">The <em>worlds</em> I work within.</h2>
   </div>
   <div class="notes-wrap reveal d1">
@@ -854,7 +857,7 @@
 <!-- ACCOLADES -->
 <section class="block deep" id="press">
   <div class="reveal">
-    <div class="section-tag">— V — In the Press</div>
+    <div class="section-tag">· V · In the Press</div>
     <h2 class="section-headline">Some kind <em>notices</em>, archived with affection.</h2>
   </div>
   <div class="accolades">
@@ -879,18 +882,18 @@
 <!-- FORMATION -->
 <section class="block rose">
   <div class="reveal">
-    <div class="section-tag">— VI — Formation</div>
+    <div class="section-tag">· VI · Formation</div>
     <h2 class="section-headline">Where the <em>training</em> began.</h2>
   </div>
   <div class="formation-grid">
     <div class="form-card reveal">
-      <div class="fc-monogram">— M.A. —</div>
+      <div class="fc-monogram">· M.A. ·</div>
       <div class="fc-degree">Luxury Brand Management</div>
       <div class="fc-school">Institut Français de la Mode</div>
       <div class="fc-year">Paris · Promotion 2015</div>
     </div>
     <div class="form-card reveal d1">
-      <div class="fc-monogram">— B.A. —</div>
+      <div class="fc-monogram">· B.A. ·</div>
       <div class="fc-degree">Art History &amp; Communications</div>
       <div class="fc-school">Sciences Po Paris</div>
       <div class="fc-year">Paris · Promotion 2013</div>
@@ -901,32 +904,32 @@
 <!-- CONTACT -->
 <section class="block deep contact" id="contact">
   <div class="reveal">
-    <div class="section-tag" style="justify-content:center;">— VII — L'Atelier</div>
-    <h2 class="contact-headline">If you have a maison <em>worth its desire</em> — write to me.</h2>
+    <div class="section-tag" style="justify-content:center;">· VII · L'Atelier</div>
+    <h2 class="contact-headline">If you have a maison <em>worth its desire</em>, write to me.</h2>
     <p class="contact-deck">Selectively taking on global brand engagements, advisory roles, and editorial direction. I reply personally.</p>
   </div>
   <div class="contact-grid reveal d1">
     <a class="contact-cell" href="mailto:isabelle@morinco.com">
-      <div class="cc-label">— Direct</div>
+      <div class="cc-label">· Direct</div>
       <div class="cc-value">isabelle@morinco.com</div>
     </a>
     <a class="contact-cell" href="tel:+15559012345">
-      <div class="cc-label">— Téléphone</div>
+      <div class="cc-label">· Téléphone</div>
       <div class="cc-value">+1 (555) 901-2345</div>
     </a>
     <a class="contact-cell" href="#">
-      <div class="cc-label">— Studio</div>
+      <div class="cc-label">· Studio</div>
       <div class="cc-value">morinco.com</div>
     </a>
     <a class="contact-cell" href="#">
-      <div class="cc-label">— Bases</div>
+      <div class="cc-label">· Bases</div>
       <div class="cc-value">Paris · New York</div>
     </a>
   </div>
 </section>
 
 <footer>
-  <div class="heart">— ♡ —</div>
+  <div class="heart">♡</div>
   <div class="meta">© Isabelle Morin · MMXXVI · Paris &amp; New York</div>
 </footer>
 
